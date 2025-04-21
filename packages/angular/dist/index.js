@@ -18,17 +18,17 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/index.ts
-var src_exports = {};
-__export(src_exports, {
+var index_exports = {};
+__export(index_exports, {
   builder: () => builder,
-  default: () => src_default,
+  default: () => index_default,
   generateAngular: () => generateAngular,
   generateAngularFooter: () => generateAngularFooter,
   generateAngularHeader: () => generateAngularHeader,
   generateAngularTitle: () => generateAngularTitle,
   getAngularDependencies: () => getAngularDependencies
 });
-module.exports = __toCommonJS(src_exports);
+module.exports = __toCommonJS(index_exports);
 var import_core = require("@orval/core");
 var ANGULAR_DEPENDENCIES = [
   {
@@ -36,7 +36,10 @@ var ANGULAR_DEPENDENCIES = [
       { name: "HttpClient", values: true },
       { name: "HttpHeaders" },
       { name: "HttpParams" },
-      { name: "HttpContext" }
+      { name: "HttpContext" },
+      { name: "HttpResponse", alias: "AngularHttpResponse" },
+      // alias to prevent naming conflict with msw
+      { name: "HttpEvent" }
     ],
     dependency: "@angular/common/http"
   },
@@ -115,12 +118,10 @@ var generateImplementation = ({
   formUrlEncoded,
   paramsSerializer
 }, { route, context }) => {
-  var _a, _b;
-  const isRequestOptions = (override == null ? void 0 : override.requestOptions) !== false;
-  const isFormData = (override == null ? void 0 : override.formData) !== false;
-  const isFormUrlEncoded = (override == null ? void 0 : override.formUrlEncoded) !== false;
-  const isExactOptionalPropertyTypes = !!((_b = (_a = context.tsconfig) == null ? void 0 : _a.compilerOptions) == null ? void 0 : _b.exactOptionalPropertyTypes);
-  const isBodyVerb = import_core.VERBS_WITH_BODY.includes(verb);
+  const isRequestOptions = override?.requestOptions !== false;
+  const isFormData = override?.formData.disabled === false;
+  const isFormUrlEncoded = override?.formUrlEncoded !== false;
+  const isExactOptionalPropertyTypes = !!context.output.tsconfig?.compilerOptions?.exactOptionalPropertyTypes;
   const bodyForm = (0, import_core.generateFormDataAndUrlEncodedFunction)({
     formData,
     formUrlEncoded,
@@ -146,11 +147,10 @@ var generateImplementation = ({
       isFormData,
       isFormUrlEncoded,
       hasSignal: false,
-      isBodyVerb,
       isExactOptionalPropertyTypes
     });
     const requestOptions = isRequestOptions ? (0, import_core.generateMutatorRequestOptions)(
-      override == null ? void 0 : override.requestOptions,
+      override?.requestOptions,
       mutator.hasThirdArg
     ) : "";
     const propsImplementation = mutator.bodyTypeName && body.definition ? (0, import_core.toObjectString)(props, "implementation").replace(
@@ -174,16 +174,26 @@ var generateImplementation = ({
     queryParams,
     response,
     verb,
-    requestOptions: override == null ? void 0 : override.requestOptions,
+    requestOptions: override?.requestOptions,
     isFormData,
     isFormUrlEncoded,
     paramsSerializer,
-    paramsSerializerOptions: override == null ? void 0 : override.paramsSerializerOptions,
+    paramsSerializerOptions: override?.paramsSerializerOptions,
     isAngular: true,
     isExactOptionalPropertyTypes,
     hasSignal: false
   });
-  return ` ${operationName}<TData = ${dataType}>(
+  const propsDefinition = (0, import_core.toObjectString)(props, "definition");
+  const overloads = isRequestOptions ? `${operationName}<TData = ${dataType}>(
+    ${propsDefinition} options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'body' }
+  ): Observable<TData>;
+    ${operationName}<TData = ${dataType}>(
+    ${propsDefinition} options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'response' }
+  ): Observable<AngularHttpResponse<TData>>;
+    ${operationName}<TData = ${dataType}>(
+    ${propsDefinition} options?: Omit<HttpClientOptions, 'observe'> & { observe?: 'events' }
+  ): Observable<HttpEvent<TData>>;` : "";
+  return ` ${overloads}${operationName}<TData = ${dataType}>(
     ${(0, import_core.toObjectString)(
     props,
     "implementation"
@@ -206,7 +216,7 @@ var angularClientBuilder = {
   title: generateAngularTitle
 };
 var builder = () => () => angularClientBuilder;
-var src_default = builder;
+var index_default = builder;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   builder,

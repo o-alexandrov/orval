@@ -5,9 +5,6 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
 var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
@@ -20,6 +17,7 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
+var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "default"), secondTarget && __copyProps(secondTarget, mod, "default"));
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
   // If the importer is in node compatibility mode or this is not an ESM
   // file that has been converted to a CommonJS file using a Babel-
@@ -30,529 +28,19 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// ../../node_modules/lodash.omit/index.js
-var require_lodash = __commonJS({
-  "../../node_modules/lodash.omit/index.js"(exports, module2) {
-    "use strict";
-    var LARGE_ARRAY_SIZE = 200;
-    var HASH_UNDEFINED = "__lodash_hash_undefined__";
-    var INFINITY = 1 / 0;
-    var MAX_SAFE_INTEGER = 9007199254740991;
-    var argsTag = "[object Arguments]";
-    var funcTag = "[object Function]";
-    var genTag = "[object GeneratorFunction]";
-    var symbolTag = "[object Symbol]";
-    var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-    var reIsHostCtor = /^\[object .+?Constructor\]$/;
-    var reIsUint = /^(?:0|[1-9]\d*)$/;
-    var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
-    var freeSelf = typeof self == "object" && self && self.Object === Object && self;
-    var root = freeGlobal || freeSelf || Function("return this")();
-    function apply(func, thisArg, args) {
-      switch (args.length) {
-        case 0:
-          return func.call(thisArg);
-        case 1:
-          return func.call(thisArg, args[0]);
-        case 2:
-          return func.call(thisArg, args[0], args[1]);
-        case 3:
-          return func.call(thisArg, args[0], args[1], args[2]);
-      }
-      return func.apply(thisArg, args);
-    }
-    function arrayIncludes(array, value) {
-      var length = array ? array.length : 0;
-      return !!length && baseIndexOf(array, value, 0) > -1;
-    }
-    function arrayIncludesWith(array, value, comparator) {
-      var index = -1, length = array ? array.length : 0;
-      while (++index < length) {
-        if (comparator(value, array[index])) {
-          return true;
-        }
-      }
-      return false;
-    }
-    function arrayMap(array, iteratee) {
-      var index = -1, length = array ? array.length : 0, result = Array(length);
-      while (++index < length) {
-        result[index] = iteratee(array[index], index, array);
-      }
-      return result;
-    }
-    function arrayPush(array, values) {
-      var index = -1, length = values.length, offset = array.length;
-      while (++index < length) {
-        array[offset + index] = values[index];
-      }
-      return array;
-    }
-    function baseFindIndex(array, predicate, fromIndex, fromRight) {
-      var length = array.length, index = fromIndex + (fromRight ? 1 : -1);
-      while (fromRight ? index-- : ++index < length) {
-        if (predicate(array[index], index, array)) {
-          return index;
-        }
-      }
-      return -1;
-    }
-    function baseIndexOf(array, value, fromIndex) {
-      if (value !== value) {
-        return baseFindIndex(array, baseIsNaN, fromIndex);
-      }
-      var index = fromIndex - 1, length = array.length;
-      while (++index < length) {
-        if (array[index] === value) {
-          return index;
-        }
-      }
-      return -1;
-    }
-    function baseIsNaN(value) {
-      return value !== value;
-    }
-    function baseTimes(n, iteratee) {
-      var index = -1, result = Array(n);
-      while (++index < n) {
-        result[index] = iteratee(index);
-      }
-      return result;
-    }
-    function baseUnary(func) {
-      return function(value) {
-        return func(value);
-      };
-    }
-    function cacheHas(cache, key) {
-      return cache.has(key);
-    }
-    function getValue(object, key) {
-      return object == null ? void 0 : object[key];
-    }
-    function isHostObject(value) {
-      var result = false;
-      if (value != null && typeof value.toString != "function") {
-        try {
-          result = !!(value + "");
-        } catch (e) {
-        }
-      }
-      return result;
-    }
-    function overArg(func, transform) {
-      return function(arg) {
-        return func(transform(arg));
-      };
-    }
-    var arrayProto = Array.prototype;
-    var funcProto = Function.prototype;
-    var objectProto = Object.prototype;
-    var coreJsData = root["__core-js_shared__"];
-    var maskSrcKey = function() {
-      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
-      return uid ? "Symbol(src)_1." + uid : "";
-    }();
-    var funcToString = funcProto.toString;
-    var hasOwnProperty = objectProto.hasOwnProperty;
-    var objectToString = objectProto.toString;
-    var reIsNative = RegExp(
-      "^" + funcToString.call(hasOwnProperty).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$"
-    );
-    var Symbol2 = root.Symbol;
-    var getPrototype = overArg(Object.getPrototypeOf, Object);
-    var propertyIsEnumerable = objectProto.propertyIsEnumerable;
-    var splice = arrayProto.splice;
-    var spreadableSymbol = Symbol2 ? Symbol2.isConcatSpreadable : void 0;
-    var nativeGetSymbols = Object.getOwnPropertySymbols;
-    var nativeMax = Math.max;
-    var Map = getNative(root, "Map");
-    var nativeCreate = getNative(Object, "create");
-    function Hash(entries) {
-      var index = -1, length = entries ? entries.length : 0;
-      this.clear();
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    function hashClear() {
-      this.__data__ = nativeCreate ? nativeCreate(null) : {};
-    }
-    function hashDelete(key) {
-      return this.has(key) && delete this.__data__[key];
-    }
-    function hashGet(key) {
-      var data = this.__data__;
-      if (nativeCreate) {
-        var result = data[key];
-        return result === HASH_UNDEFINED ? void 0 : result;
-      }
-      return hasOwnProperty.call(data, key) ? data[key] : void 0;
-    }
-    function hashHas(key) {
-      var data = this.__data__;
-      return nativeCreate ? data[key] !== void 0 : hasOwnProperty.call(data, key);
-    }
-    function hashSet(key, value) {
-      var data = this.__data__;
-      data[key] = nativeCreate && value === void 0 ? HASH_UNDEFINED : value;
-      return this;
-    }
-    Hash.prototype.clear = hashClear;
-    Hash.prototype["delete"] = hashDelete;
-    Hash.prototype.get = hashGet;
-    Hash.prototype.has = hashHas;
-    Hash.prototype.set = hashSet;
-    function ListCache(entries) {
-      var index = -1, length = entries ? entries.length : 0;
-      this.clear();
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    function listCacheClear() {
-      this.__data__ = [];
-    }
-    function listCacheDelete(key) {
-      var data = this.__data__, index = assocIndexOf(data, key);
-      if (index < 0) {
-        return false;
-      }
-      var lastIndex = data.length - 1;
-      if (index == lastIndex) {
-        data.pop();
-      } else {
-        splice.call(data, index, 1);
-      }
-      return true;
-    }
-    function listCacheGet(key) {
-      var data = this.__data__, index = assocIndexOf(data, key);
-      return index < 0 ? void 0 : data[index][1];
-    }
-    function listCacheHas(key) {
-      return assocIndexOf(this.__data__, key) > -1;
-    }
-    function listCacheSet(key, value) {
-      var data = this.__data__, index = assocIndexOf(data, key);
-      if (index < 0) {
-        data.push([key, value]);
-      } else {
-        data[index][1] = value;
-      }
-      return this;
-    }
-    ListCache.prototype.clear = listCacheClear;
-    ListCache.prototype["delete"] = listCacheDelete;
-    ListCache.prototype.get = listCacheGet;
-    ListCache.prototype.has = listCacheHas;
-    ListCache.prototype.set = listCacheSet;
-    function MapCache(entries) {
-      var index = -1, length = entries ? entries.length : 0;
-      this.clear();
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    function mapCacheClear() {
-      this.__data__ = {
-        "hash": new Hash(),
-        "map": new (Map || ListCache)(),
-        "string": new Hash()
-      };
-    }
-    function mapCacheDelete(key) {
-      return getMapData(this, key)["delete"](key);
-    }
-    function mapCacheGet(key) {
-      return getMapData(this, key).get(key);
-    }
-    function mapCacheHas(key) {
-      return getMapData(this, key).has(key);
-    }
-    function mapCacheSet(key, value) {
-      getMapData(this, key).set(key, value);
-      return this;
-    }
-    MapCache.prototype.clear = mapCacheClear;
-    MapCache.prototype["delete"] = mapCacheDelete;
-    MapCache.prototype.get = mapCacheGet;
-    MapCache.prototype.has = mapCacheHas;
-    MapCache.prototype.set = mapCacheSet;
-    function SetCache(values) {
-      var index = -1, length = values ? values.length : 0;
-      this.__data__ = new MapCache();
-      while (++index < length) {
-        this.add(values[index]);
-      }
-    }
-    function setCacheAdd(value) {
-      this.__data__.set(value, HASH_UNDEFINED);
-      return this;
-    }
-    function setCacheHas(value) {
-      return this.__data__.has(value);
-    }
-    SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
-    SetCache.prototype.has = setCacheHas;
-    function arrayLikeKeys(value, inherited) {
-      var result = isArray(value) || isArguments(value) ? baseTimes(value.length, String) : [];
-      var length = result.length, skipIndexes = !!length;
-      for (var key in value) {
-        if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == "length" || isIndex(key, length)))) {
-          result.push(key);
-        }
-      }
-      return result;
-    }
-    function assocIndexOf(array, key) {
-      var length = array.length;
-      while (length--) {
-        if (eq(array[length][0], key)) {
-          return length;
-        }
-      }
-      return -1;
-    }
-    function baseDifference(array, values, iteratee, comparator) {
-      var index = -1, includes = arrayIncludes, isCommon = true, length = array.length, result = [], valuesLength = values.length;
-      if (!length) {
-        return result;
-      }
-      if (iteratee) {
-        values = arrayMap(values, baseUnary(iteratee));
-      }
-      if (comparator) {
-        includes = arrayIncludesWith;
-        isCommon = false;
-      } else if (values.length >= LARGE_ARRAY_SIZE) {
-        includes = cacheHas;
-        isCommon = false;
-        values = new SetCache(values);
-      }
-      outer:
-        while (++index < length) {
-          var value = array[index], computed = iteratee ? iteratee(value) : value;
-          value = comparator || value !== 0 ? value : 0;
-          if (isCommon && computed === computed) {
-            var valuesIndex = valuesLength;
-            while (valuesIndex--) {
-              if (values[valuesIndex] === computed) {
-                continue outer;
-              }
-            }
-            result.push(value);
-          } else if (!includes(values, computed, comparator)) {
-            result.push(value);
-          }
-        }
-      return result;
-    }
-    function baseFlatten(array, depth, predicate, isStrict, result) {
-      var index = -1, length = array.length;
-      predicate || (predicate = isFlattenable);
-      result || (result = []);
-      while (++index < length) {
-        var value = array[index];
-        if (depth > 0 && predicate(value)) {
-          if (depth > 1) {
-            baseFlatten(value, depth - 1, predicate, isStrict, result);
-          } else {
-            arrayPush(result, value);
-          }
-        } else if (!isStrict) {
-          result[result.length] = value;
-        }
-      }
-      return result;
-    }
-    function baseGetAllKeys(object, keysFunc, symbolsFunc) {
-      var result = keysFunc(object);
-      return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
-    }
-    function baseIsNative(value) {
-      if (!isObject6(value) || isMasked(value)) {
-        return false;
-      }
-      var pattern = isFunction5(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
-      return pattern.test(toSource(value));
-    }
-    function baseKeysIn(object) {
-      if (!isObject6(object)) {
-        return nativeKeysIn(object);
-      }
-      var isProto = isPrototype(object), result = [];
-      for (var key in object) {
-        if (!(key == "constructor" && (isProto || !hasOwnProperty.call(object, key)))) {
-          result.push(key);
-        }
-      }
-      return result;
-    }
-    function basePick(object, props) {
-      object = Object(object);
-      return basePickBy(object, props, function(value, key) {
-        return key in object;
-      });
-    }
-    function basePickBy(object, props, predicate) {
-      var index = -1, length = props.length, result = {};
-      while (++index < length) {
-        var key = props[index], value = object[key];
-        if (predicate(value, key)) {
-          result[key] = value;
-        }
-      }
-      return result;
-    }
-    function baseRest(func, start) {
-      start = nativeMax(start === void 0 ? func.length - 1 : start, 0);
-      return function() {
-        var args = arguments, index = -1, length = nativeMax(args.length - start, 0), array = Array(length);
-        while (++index < length) {
-          array[index] = args[start + index];
-        }
-        index = -1;
-        var otherArgs = Array(start + 1);
-        while (++index < start) {
-          otherArgs[index] = args[index];
-        }
-        otherArgs[start] = array;
-        return apply(func, this, otherArgs);
-      };
-    }
-    function getAllKeysIn(object) {
-      return baseGetAllKeys(object, keysIn, getSymbolsIn);
-    }
-    function getMapData(map2, key) {
-      var data = map2.__data__;
-      return isKeyable(key) ? data[typeof key == "string" ? "string" : "hash"] : data.map;
-    }
-    function getNative(object, key) {
-      var value = getValue(object, key);
-      return baseIsNative(value) ? value : void 0;
-    }
-    var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
-    var getSymbolsIn = !nativeGetSymbols ? stubArray : function(object) {
-      var result = [];
-      while (object) {
-        arrayPush(result, getSymbols(object));
-        object = getPrototype(object);
-      }
-      return result;
-    };
-    function isFlattenable(value) {
-      return isArray(value) || isArguments(value) || !!(spreadableSymbol && value && value[spreadableSymbol]);
-    }
-    function isIndex(value, length) {
-      length = length == null ? MAX_SAFE_INTEGER : length;
-      return !!length && (typeof value == "number" || reIsUint.test(value)) && (value > -1 && value % 1 == 0 && value < length);
-    }
-    function isKeyable(value) {
-      var type2 = typeof value;
-      return type2 == "string" || type2 == "number" || type2 == "symbol" || type2 == "boolean" ? value !== "__proto__" : value === null;
-    }
-    function isMasked(func) {
-      return !!maskSrcKey && maskSrcKey in func;
-    }
-    function isPrototype(value) {
-      var Ctor = value && value.constructor, proto = typeof Ctor == "function" && Ctor.prototype || objectProto;
-      return value === proto;
-    }
-    function nativeKeysIn(object) {
-      var result = [];
-      if (object != null) {
-        for (var key in Object(object)) {
-          result.push(key);
-        }
-      }
-      return result;
-    }
-    function toKey(value) {
-      if (typeof value == "string" || isSymbol(value)) {
-        return value;
-      }
-      var result = value + "";
-      return result == "0" && 1 / value == -INFINITY ? "-0" : result;
-    }
-    function toSource(func) {
-      if (func != null) {
-        try {
-          return funcToString.call(func);
-        } catch (e) {
-        }
-        try {
-          return func + "";
-        } catch (e) {
-        }
-      }
-      return "";
-    }
-    function eq(value, other) {
-      return value === other || value !== value && other !== other;
-    }
-    function isArguments(value) {
-      return isArrayLikeObject(value) && hasOwnProperty.call(value, "callee") && (!propertyIsEnumerable.call(value, "callee") || objectToString.call(value) == argsTag);
-    }
-    var isArray = Array.isArray;
-    function isArrayLike(value) {
-      return value != null && isLength(value.length) && !isFunction5(value);
-    }
-    function isArrayLikeObject(value) {
-      return isObjectLike(value) && isArrayLike(value);
-    }
-    function isFunction5(value) {
-      var tag = isObject6(value) ? objectToString.call(value) : "";
-      return tag == funcTag || tag == genTag;
-    }
-    function isLength(value) {
-      return typeof value == "number" && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-    }
-    function isObject6(value) {
-      var type2 = typeof value;
-      return !!value && (type2 == "object" || type2 == "function");
-    }
-    function isObjectLike(value) {
-      return !!value && typeof value == "object";
-    }
-    function isSymbol(value) {
-      return typeof value == "symbol" || isObjectLike(value) && objectToString.call(value) == symbolTag;
-    }
-    function keysIn(object) {
-      return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
-    }
-    var omit2 = baseRest(function(object, props) {
-      if (object == null) {
-        return {};
-      }
-      props = arrayMap(baseFlatten(props, 1), toKey);
-      return basePick(object, baseDifference(getAllKeysIn(object), props));
-    });
-    function stubArray() {
-      return [];
-    }
-    module2.exports = omit2;
-  }
-});
-
 // src/index.ts
-var src_exports = {};
-__export(src_exports, {
-  Options: () => import_core12.Options,
-  default: () => src_default,
+var index_exports = {};
+__export(index_exports, {
+  Options: () => import_core13.Options,
+  default: () => index_default,
   defineConfig: () => defineConfig,
   generate: () => generate
 });
-module.exports = __toCommonJS(src_exports);
-var import_core12 = require("@orval/core");
-var import_chalk7 = __toESM(require("chalk"));
+module.exports = __toCommonJS(index_exports);
+var import_core13 = require("@orval/core");
 
 // src/generate.ts
-var import_core11 = require("@orval/core");
-var import_chalk6 = __toESM(require("chalk"));
+var import_core12 = require("@orval/core");
 
 // src/import-specs.ts
 var import_swagger_parser = __toESM(require("@apidevtools/swagger-parser"));
@@ -567,10 +55,8 @@ function isObject(subject) {
   return typeof subject === "object" && subject !== null;
 }
 function toArray(sequence) {
-  if (Array.isArray(sequence))
-    return sequence;
-  else if (isNothing(sequence))
-    return [];
+  if (Array.isArray(sequence)) return sequence;
+  else if (isNothing(sequence)) return [];
   return [sequence];
 }
 function extend(target, source) {
@@ -610,8 +96,7 @@ var common = {
 };
 function formatError(exception2, compact) {
   var where = "", message = exception2.reason || "(unknown reason)";
-  if (!exception2.mark)
-    return message;
+  if (!exception2.mark) return message;
   if (exception2.mark.name) {
     where += 'in "' + exception2.mark.name + '" ';
   }
@@ -662,16 +147,11 @@ function padStart(string, max) {
 }
 function makeSnippet(mark, options) {
   options = Object.create(options || null);
-  if (!mark.buffer)
-    return null;
-  if (!options.maxLength)
-    options.maxLength = 79;
-  if (typeof options.indent !== "number")
-    options.indent = 1;
-  if (typeof options.linesBefore !== "number")
-    options.linesBefore = 3;
-  if (typeof options.linesAfter !== "number")
-    options.linesAfter = 2;
+  if (!mark.buffer) return null;
+  if (!options.maxLength) options.maxLength = 79;
+  if (typeof options.indent !== "number") options.indent = 1;
+  if (typeof options.linesBefore !== "number") options.linesBefore = 3;
+  if (typeof options.linesAfter !== "number") options.linesAfter = 2;
   var re = /\r?\n|\r|\0/g;
   var lineStarts = [0];
   var lineEnds = [];
@@ -684,14 +164,12 @@ function makeSnippet(mark, options) {
       foundLineNo = lineStarts.length - 2;
     }
   }
-  if (foundLineNo < 0)
-    foundLineNo = lineStarts.length - 1;
+  if (foundLineNo < 0) foundLineNo = lineStarts.length - 1;
   var result = "", i, line;
   var lineNoLength = Math.min(mark.line + options.linesAfter, lineEnds.length).toString().length;
   var maxLineLength = options.maxLength - (options.indent + lineNoLength + 3);
   for (i = 1; i <= options.linesBefore; i++) {
-    if (foundLineNo - i < 0)
-      break;
+    if (foundLineNo - i < 0) break;
     line = getLine(
       mark.buffer,
       lineStarts[foundLineNo - i],
@@ -705,8 +183,7 @@ function makeSnippet(mark, options) {
   result += common.repeat(" ", options.indent) + padStart((mark.line + 1).toString(), lineNoLength) + " | " + line.str + "\n";
   result += common.repeat("-", options.indent + lineNoLength + 3 + line.pos) + "^\n";
   for (i = 1; i <= options.linesAfter; i++) {
-    if (foundLineNo + i >= lineEnds.length)
-      break;
+    if (foundLineNo + i >= lineEnds.length) break;
     line = getLine(
       mark.buffer,
       lineStarts[foundLineNo + i],
@@ -825,10 +302,8 @@ Schema$1.prototype.extend = function extend2(definition) {
   } else if (Array.isArray(definition)) {
     explicit = explicit.concat(definition);
   } else if (definition && (Array.isArray(definition.implicit) || Array.isArray(definition.explicit))) {
-    if (definition.implicit)
-      implicit = implicit.concat(definition.implicit);
-    if (definition.explicit)
-      explicit = explicit.concat(definition.explicit);
+    if (definition.implicit) implicit = implicit.concat(definition.implicit);
+    if (definition.explicit) explicit = explicit.concat(definition.explicit);
   } else {
     throw new exception("Schema.extend argument should be a Type, [ Type ], or a schema definition ({ implicit: [...], explicit: [...] })");
   }
@@ -883,8 +358,7 @@ var failsafe = new schema({
   ]
 });
 function resolveYamlNull(data) {
-  if (data === null)
-    return true;
+  if (data === null) return true;
   var max = data.length;
   return max === 1 && data === "~" || max === 4 && (data === "null" || data === "Null" || data === "NULL");
 }
@@ -919,8 +393,7 @@ var _null = new type("tag:yaml.org,2002:null", {
   defaultStyle: "lowercase"
 });
 function resolveYamlBoolean(data) {
-  if (data === null)
-    return false;
+  if (data === null) return false;
   var max = data.length;
   return max === 4 && (data === "true" || data === "True" || data === "TRUE") || max === 5 && (data === "false" || data === "False" || data === "FALSE");
 }
@@ -958,27 +431,22 @@ function isDecCode(c) {
   return 48 <= c && c <= 57;
 }
 function resolveYamlInteger(data) {
-  if (data === null)
-    return false;
+  if (data === null) return false;
   var max = data.length, index = 0, hasDigits = false, ch;
-  if (!max)
-    return false;
+  if (!max) return false;
   ch = data[index];
   if (ch === "-" || ch === "+") {
     ch = data[++index];
   }
   if (ch === "0") {
-    if (index + 1 === max)
-      return true;
+    if (index + 1 === max) return true;
     ch = data[++index];
     if (ch === "b") {
       index++;
       for (; index < max; index++) {
         ch = data[index];
-        if (ch === "_")
-          continue;
-        if (ch !== "0" && ch !== "1")
-          return false;
+        if (ch === "_") continue;
+        if (ch !== "0" && ch !== "1") return false;
         hasDigits = true;
       }
       return hasDigits && ch !== "_";
@@ -987,10 +455,8 @@ function resolveYamlInteger(data) {
       index++;
       for (; index < max; index++) {
         ch = data[index];
-        if (ch === "_")
-          continue;
-        if (!isHexCode(data.charCodeAt(index)))
-          return false;
+        if (ch === "_") continue;
+        if (!isHexCode(data.charCodeAt(index))) return false;
         hasDigits = true;
       }
       return hasDigits && ch !== "_";
@@ -999,28 +465,23 @@ function resolveYamlInteger(data) {
       index++;
       for (; index < max; index++) {
         ch = data[index];
-        if (ch === "_")
-          continue;
-        if (!isOctCode(data.charCodeAt(index)))
-          return false;
+        if (ch === "_") continue;
+        if (!isOctCode(data.charCodeAt(index))) return false;
         hasDigits = true;
       }
       return hasDigits && ch !== "_";
     }
   }
-  if (ch === "_")
-    return false;
+  if (ch === "_") return false;
   for (; index < max; index++) {
     ch = data[index];
-    if (ch === "_")
-      continue;
+    if (ch === "_") continue;
     if (!isDecCode(data.charCodeAt(index))) {
       return false;
     }
     hasDigits = true;
   }
-  if (!hasDigits || ch === "_")
-    return false;
+  if (!hasDigits || ch === "_") return false;
   return true;
 }
 function constructYamlInteger(data) {
@@ -1030,20 +491,15 @@ function constructYamlInteger(data) {
   }
   ch = value[0];
   if (ch === "-" || ch === "+") {
-    if (ch === "-")
-      sign = -1;
+    if (ch === "-") sign = -1;
     value = value.slice(1);
     ch = value[0];
   }
-  if (value === "0")
-    return 0;
+  if (value === "0") return 0;
   if (ch === "0") {
-    if (value[1] === "b")
-      return sign * parseInt(value.slice(2), 2);
-    if (value[1] === "x")
-      return sign * parseInt(value.slice(2), 16);
-    if (value[1] === "o")
-      return sign * parseInt(value.slice(2), 8);
+    if (value[1] === "b") return sign * parseInt(value.slice(2), 2);
+    if (value[1] === "x") return sign * parseInt(value.slice(2), 16);
+    if (value[1] === "o") return sign * parseInt(value.slice(2), 8);
   }
   return sign * parseInt(value, 10);
 }
@@ -1083,8 +539,7 @@ var YAML_FLOAT_PATTERN = new RegExp(
   "^(?:[-+]?(?:[0-9][0-9_]*)(?:\\.[0-9_]*)?(?:[eE][-+]?[0-9]+)?|\\.[0-9_]+(?:[eE][-+]?[0-9]+)?|[-+]?\\.(?:inf|Inf|INF)|\\.(?:nan|NaN|NAN))$"
 );
 function resolveYamlFloat(data) {
-  if (data === null)
-    return false;
+  if (data === null) return false;
   if (!YAML_FLOAT_PATTERN.test(data) || // Quick hack to not allow integers end with `_`
   // Probably should update regexp & check speed
   data[data.length - 1] === "_") {
@@ -1169,21 +624,16 @@ var YAML_TIMESTAMP_REGEXP = new RegExp(
   "^([0-9][0-9][0-9][0-9])-([0-9][0-9]?)-([0-9][0-9]?)(?:[Tt]|[ \\t]+)([0-9][0-9]?):([0-9][0-9]):([0-9][0-9])(?:\\.([0-9]*))?(?:[ \\t]*(Z|([-+])([0-9][0-9]?)(?::([0-9][0-9]))?))?$"
 );
 function resolveYamlTimestamp(data) {
-  if (data === null)
-    return false;
-  if (YAML_DATE_REGEXP.exec(data) !== null)
-    return true;
-  if (YAML_TIMESTAMP_REGEXP.exec(data) !== null)
-    return true;
+  if (data === null) return false;
+  if (YAML_DATE_REGEXP.exec(data) !== null) return true;
+  if (YAML_TIMESTAMP_REGEXP.exec(data) !== null) return true;
   return false;
 }
 function constructYamlTimestamp(data) {
   var match, year, month, day, hour, minute, second, fraction = 0, delta = null, tz_hour, tz_minute, date;
   match = YAML_DATE_REGEXP.exec(data);
-  if (match === null)
-    match = YAML_TIMESTAMP_REGEXP.exec(data);
-  if (match === null)
-    throw new Error("Date resolve error");
+  if (match === null) match = YAML_TIMESTAMP_REGEXP.exec(data);
+  if (match === null) throw new Error("Date resolve error");
   year = +match[1];
   month = +match[2] - 1;
   day = +match[3];
@@ -1204,12 +654,10 @@ function constructYamlTimestamp(data) {
     tz_hour = +match[10];
     tz_minute = +(match[11] || 0);
     delta = (tz_hour * 60 + tz_minute) * 6e4;
-    if (match[9] === "-")
-      delta = -delta;
+    if (match[9] === "-") delta = -delta;
   }
   date = new Date(Date.UTC(year, month, day, hour, minute, second, fraction));
-  if (delta)
-    date.setTime(date.getTime() - delta);
+  if (delta) date.setTime(date.getTime() - delta);
   return date;
 }
 function representYamlTimestamp(object) {
@@ -1231,15 +679,12 @@ var merge = new type("tag:yaml.org,2002:merge", {
 });
 var BASE64_MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r";
 function resolveYamlBinary(data) {
-  if (data === null)
-    return false;
+  if (data === null) return false;
   var code, idx, bitlen = 0, max = data.length, map2 = BASE64_MAP;
   for (idx = 0; idx < max; idx++) {
     code = map2.indexOf(data.charAt(idx));
-    if (code > 64)
-      continue;
-    if (code < 0)
-      return false;
+    if (code > 64) continue;
+    if (code < 0) return false;
     bitlen += 6;
   }
   return bitlen % 8 === 0;
@@ -1310,28 +755,21 @@ var binary = new type("tag:yaml.org,2002:binary", {
 var _hasOwnProperty$3 = Object.prototype.hasOwnProperty;
 var _toString$2 = Object.prototype.toString;
 function resolveYamlOmap(data) {
-  if (data === null)
-    return true;
+  if (data === null) return true;
   var objectKeys = [], index, length, pair, pairKey, pairHasKey, object = data;
   for (index = 0, length = object.length; index < length; index += 1) {
     pair = object[index];
     pairHasKey = false;
-    if (_toString$2.call(pair) !== "[object Object]")
-      return false;
+    if (_toString$2.call(pair) !== "[object Object]") return false;
     for (pairKey in pair) {
       if (_hasOwnProperty$3.call(pair, pairKey)) {
-        if (!pairHasKey)
-          pairHasKey = true;
-        else
-          return false;
+        if (!pairHasKey) pairHasKey = true;
+        else return false;
       }
     }
-    if (!pairHasKey)
-      return false;
-    if (objectKeys.indexOf(pairKey) === -1)
-      objectKeys.push(pairKey);
-    else
-      return false;
+    if (!pairHasKey) return false;
+    if (objectKeys.indexOf(pairKey) === -1) objectKeys.push(pairKey);
+    else return false;
   }
   return true;
 }
@@ -1345,24 +783,20 @@ var omap = new type("tag:yaml.org,2002:omap", {
 });
 var _toString$1 = Object.prototype.toString;
 function resolveYamlPairs(data) {
-  if (data === null)
-    return true;
+  if (data === null) return true;
   var index, length, pair, keys, result, object = data;
   result = new Array(object.length);
   for (index = 0, length = object.length; index < length; index += 1) {
     pair = object[index];
-    if (_toString$1.call(pair) !== "[object Object]")
-      return false;
+    if (_toString$1.call(pair) !== "[object Object]") return false;
     keys = Object.keys(pair);
-    if (keys.length !== 1)
-      return false;
+    if (keys.length !== 1) return false;
     result[index] = [keys[0], pair[keys[0]]];
   }
   return true;
 }
 function constructYamlPairs(data) {
-  if (data === null)
-    return [];
+  if (data === null) return [];
   var index, length, pair, keys, result, object = data;
   result = new Array(object.length);
   for (index = 0, length = object.length; index < length; index += 1) {
@@ -1379,13 +813,11 @@ var pairs = new type("tag:yaml.org,2002:pairs", {
 });
 var _hasOwnProperty$2 = Object.prototype.hasOwnProperty;
 function resolveYamlSet(data) {
-  if (data === null)
-    return true;
+  if (data === null) return true;
   var key, object = data;
   for (key in object) {
     if (_hasOwnProperty$2.call(object, key)) {
-      if (object[key] !== null)
-        return false;
+      if (object[key] !== null) return false;
     }
   }
   return true;
@@ -2046,8 +1478,7 @@ function readBlockScalar(state, nodeIndent) {
 }
 function readBlockSequence(state, nodeIndent) {
   var _line, _tag = state.tag, _anchor = state.anchor, _result = [], following, detected = false, ch;
-  if (state.firstTabInLine !== -1)
-    return false;
+  if (state.firstTabInLine !== -1) return false;
   if (state.anchor !== null) {
     state.anchorMap[state.anchor] = _result;
   }
@@ -2095,8 +1526,7 @@ function readBlockSequence(state, nodeIndent) {
 }
 function readBlockMapping(state, nodeIndent, flowIndent) {
   var following, allowCompact, _line, _keyLine, _keyLineStart, _keyPos, _tag = state.tag, _anchor = state.anchor, _result = {}, overridableKeys = /* @__PURE__ */ Object.create(null), keyTag = null, keyNode = null, valueNode = null, atExplicitKey = false, detected = false, ch;
-  if (state.firstTabInLine !== -1)
-    return false;
+  if (state.firstTabInLine !== -1) return false;
   if (state.anchor !== null) {
     state.anchorMap[state.anchor] = _result;
   }
@@ -2206,8 +1636,7 @@ function readBlockMapping(state, nodeIndent, flowIndent) {
 function readTagProperty(state) {
   var _position, isVerbatim = false, isNamed = false, tagHandle, tagName, ch;
   ch = state.input.charCodeAt(state.position);
-  if (ch !== 33)
-    return false;
+  if (ch !== 33) return false;
   if (state.tag !== null) {
     throwError(state, "duplication of a tag property");
   }
@@ -2278,8 +1707,7 @@ function readTagProperty(state) {
 function readAnchorProperty(state) {
   var _position, ch;
   ch = state.input.charCodeAt(state.position);
-  if (ch !== 38)
-    return false;
+  if (ch !== 38) return false;
   if (state.anchor !== null) {
     throwError(state, "duplication of an anchor property");
   }
@@ -2297,8 +1725,7 @@ function readAnchorProperty(state) {
 function readAlias(state) {
   var _position, alias, ch;
   ch = state.input.charCodeAt(state.position);
-  if (ch !== 42)
-    return false;
+  if (ch !== 42) return false;
   ch = state.input.charCodeAt(++state.position);
   _position = state.position;
   while (ch !== 0 && !is_WS_OR_EOL(ch) && !is_FLOW_INDICATOR(ch)) {
@@ -2474,16 +1901,14 @@ function readDocument(state) {
         } while (ch !== 0 && !is_EOL(ch));
         break;
       }
-      if (is_EOL(ch))
-        break;
+      if (is_EOL(ch)) break;
       _position = state.position;
       while (ch !== 0 && !is_WS_OR_EOL(ch)) {
         ch = state.input.charCodeAt(++state.position);
       }
       directiveArgs.push(state.input.slice(_position, state.position));
     }
-    if (ch !== 0)
-      readLineBreak(state);
+    if (ch !== 0) readLineBreak(state);
     if (_hasOwnProperty$1.call(directiveHandlers, directiveName)) {
       directiveHandlers[directiveName](state, directiveName, directiveArgs);
     } else {
@@ -2635,8 +2060,7 @@ var DEPRECATED_BOOLEANS_SYNTAX = [
 var DEPRECATED_BASE60_SYNTAX = /^[-+]?[0-9_]+(?::[0-9_]+)+(?:\.[0-9_]*)?$/;
 function compileStyleMap(schema2, map2) {
   var result, keys, index, length, tag, style, type2;
-  if (map2 === null)
-    return {};
+  if (map2 === null) return {};
   result = {};
   keys = Object.keys(map2);
   for (index = 0, length = keys.length; index < length; index += 1) {
@@ -2705,8 +2129,7 @@ function indentString(string, spaces) {
       line = string.slice(position, next + 1);
       position = next + 1;
     }
-    if (line.length && line !== "\n")
-      result += ind;
+    if (line.length && line !== "\n") result += ind;
     result += line;
   }
   return result;
@@ -2890,8 +2313,7 @@ function foldString(string, width) {
   return result;
 }
 function foldLine(line, width) {
-  if (line === "" || line[0] === " ")
-    return line;
+  if (line === "" || line[0] === " ") return line;
   var breakRe = / [^ ]/g;
   var match;
   var start = 0, end, curr = 0, next = 0;
@@ -2922,8 +2344,7 @@ function escapeString(string) {
     escapeSeq = ESCAPE_SEQUENCES[char];
     if (!escapeSeq && isPrintable(char)) {
       result += string[i];
-      if (char >= 65536)
-        result += string[i + 1];
+      if (char >= 65536) result += string[i + 1];
     } else {
       result += escapeSeq || encodeHex(char);
     }
@@ -2938,8 +2359,7 @@ function writeFlowSequence(state, level, object) {
       value = state.replacer.call(object, String(index), value);
     }
     if (writeNode(state, level, value, false, false) || typeof value === "undefined" && writeNode(state, level, null, false, false)) {
-      if (_result !== "")
-        _result += "," + (!state.condenseFlow ? " " : "");
+      if (_result !== "") _result += "," + (!state.condenseFlow ? " " : "");
       _result += state.dump;
     }
   }
@@ -2972,10 +2392,8 @@ function writeFlowMapping(state, level, object) {
   var _result = "", _tag = state.tag, objectKeyList = Object.keys(object), index, length, objectKey, objectValue, pairBuffer;
   for (index = 0, length = objectKeyList.length; index < length; index += 1) {
     pairBuffer = "";
-    if (_result !== "")
-      pairBuffer += ", ";
-    if (state.condenseFlow)
-      pairBuffer += '"';
+    if (_result !== "") pairBuffer += ", ";
+    if (state.condenseFlow) pairBuffer += '"';
     objectKey = objectKeyList[index];
     objectValue = object[objectKey];
     if (state.replacer) {
@@ -2984,8 +2402,7 @@ function writeFlowMapping(state, level, object) {
     if (!writeNode(state, level, objectKey, false, false)) {
       continue;
     }
-    if (state.dump.length > 1024)
-      pairBuffer += "? ";
+    if (state.dump.length > 1024) pairBuffer += "? ";
     pairBuffer += state.dump + (state.condenseFlow ? '"' : "") + ":" + (state.condenseFlow ? "" : " ");
     if (!writeNode(state, level, objectValue, false, false)) {
       continue;
@@ -3136,8 +2553,7 @@ function writeNode(state, level, object, block, compact, iskey, isblockseq) {
     } else if (type2 === "[object Undefined]") {
       return false;
     } else {
-      if (state.skipInvalid)
-        return false;
+      if (state.skipInvalid) return false;
       throw new exception("unacceptable kind of an object to dump " + type2);
     }
     if (state.tag !== null && state.tag !== "?") {
@@ -3190,14 +2606,12 @@ function inspectNode(object, objects, duplicatesIndexes) {
 function dump$1(input, options) {
   options = options || {};
   var state = new State(options);
-  if (!state.noRefs)
-    getDuplicateReferences(input, state);
+  if (!state.noRefs) getDuplicateReferences(input, state);
   var value = input;
   if (state.replacer) {
     value = state.replacer.call({ "": value }, "", value);
   }
-  if (writeNode(state, 0, value, true, true))
-    return state.dump + "\n";
+  if (writeNode(state, 0, value, true, true)) return state.dump + "\n";
   return "";
 }
 var dump_1 = dump$1;
@@ -3260,7 +2674,6 @@ var import_fs_extra = __toESM(require("fs-extra"));
 
 // src/import-open-api.ts
 var import_core3 = require("@orval/core");
-var import_lodash = __toESM(require_lodash());
 
 // src/api.ts
 var import_core2 = require("@orval/core");
@@ -3270,10 +2683,13 @@ var import_mock = require("@orval/mock");
 var import_angular = __toESM(require("@orval/angular"));
 var import_axios = __toESM(require("@orval/axios"));
 var import_core = require("@orval/core");
+var import_fetch = __toESM(require("@orval/fetch"));
+var import_hono = __toESM(require("@orval/hono"));
 var mock = __toESM(require("@orval/mock"));
 var import_query = __toESM(require("@orval/query"));
 var import_swr = __toESM(require("@orval/swr"));
 var import_zod = __toESM(require("@orval/zod"));
+var import_mcp = __toESM(require("@orval/mcp"));
 var DEFAULT_CLIENT = import_core.OutputClient.AXIOS;
 var getGeneratorClient = (outputClient, output) => {
   const GENERATOR_CLIENT = {
@@ -3284,7 +2700,10 @@ var getGeneratorClient = (outputClient, output) => {
     "svelte-query": (0, import_query.default)({ output, type: "svelte-query" })(),
     "vue-query": (0, import_query.default)({ output, type: "vue-query" })(),
     swr: (0, import_swr.default)()(),
-    zod: (0, import_zod.default)()()
+    zod: (0, import_zod.default)()(),
+    hono: (0, import_hono.default)()(),
+    fetch: (0, import_fetch.default)()(),
+    mcp: (0, import_mcp.default)()()
   };
   const generator = (0, import_core.isFunction)(outputClient) ? outputClient(GENERATOR_CLIENT) : GENERATOR_CLIENT[outputClient];
   if (!generator) {
@@ -3300,6 +2719,7 @@ var generateClientImports = ({
   hasSchemaDir,
   isAllowSyntheticDefaultImports,
   hasGlobalMutator,
+  hasTagsMutator,
   hasParamsSerializerOptions,
   packageJson,
   output
@@ -3311,7 +2731,9 @@ var generateClientImports = ({
       ...dependencies(
         hasGlobalMutator,
         hasParamsSerializerOptions,
-        packageJson
+        packageJson,
+        output.httpClient,
+        hasTagsMutator
       ),
       ...imports
     ] : imports,
@@ -3328,7 +2750,10 @@ var generateClientHeader = ({
   provideIn,
   hasAwaitedType,
   titles,
-  output
+  output,
+  verbOptions,
+  tag,
+  clientImplementation
 }) => {
   const { header } = getGeneratorClient(outputClient, output);
   return {
@@ -3338,7 +2763,11 @@ var generateClientHeader = ({
       isGlobalMutator,
       isMutator,
       provideIn,
-      hasAwaitedType
+      hasAwaitedType,
+      output,
+      verbOptions,
+      tag,
+      clientImplementation
     }) : "",
     implementationMock: `export const ${titles.implementationMock} = () => [
 `
@@ -3356,7 +2785,8 @@ var generateClientFooter = ({
   if (!footer) {
     return {
       implementation: "",
-      implementationMock: `]
+      implementationMock: `
+]
 `
     };
   }
@@ -3377,7 +2807,7 @@ var generateClientFooter = ({
         hasAwaitedType
       });
     }
-  } catch (e) {
+  } catch {
     implementation = footer({
       operationNames,
       title: titles.implementation,
@@ -3421,7 +2851,8 @@ var generateMock2 = (verbOption, options) => {
     return {
       implementation: {
         function: "",
-        handler: ""
+        handler: "",
+        handlerName: ""
       },
       imports: []
     };
@@ -3443,16 +2874,14 @@ var generateOperations = (outputClient = DEFAULT_CLIENT, verbsOptions, options, 
         output
       );
       const client = await generatorClient(verbOption, options, outputClient);
-      const generatedMock = generateMock2(verbOption, options);
       if (!client.implementation) {
         return acc;
       }
+      const generatedMock = generateMock2(verbOption, options);
       acc[verbOption.operationId] = {
         implementation: verbOption.doc + client.implementation,
         imports: client.imports,
-        // @ts-expect-error // FIXME
         implementationMock: generatedMock.implementation,
-        // @ts-expect-error // FIXME
         importsMock: generatedMock.imports,
         tags: verbOption.tags,
         mutator: verbOption.mutator,
@@ -3467,6 +2896,16 @@ var generateOperations = (outputClient = DEFAULT_CLIENT, verbsOptions, options, 
     {}
   );
 };
+var generateExtraFiles = (outputClient = DEFAULT_CLIENT, verbsOptions, output, context) => {
+  const { extraFiles: generateExtraFiles2 } = getGeneratorClient(
+    outputClient,
+    output
+  );
+  if (!generateExtraFiles2) {
+    return Promise.resolve([]);
+  }
+  return generateExtraFiles2(verbsOptions, output, context);
+};
 
 // src/api.ts
 var getApiBuilder = async ({
@@ -3474,9 +2913,8 @@ var getApiBuilder = async ({
   output,
   context
 }) => {
-  var _a;
   const api = await (0, import_core2.asyncReduce)(
-    Object.entries((_a = context.specs[context.specKey].paths) != null ? _a : {}),
+    Object.entries(context.specs[context.specKey].paths ?? {}),
     async (acc, [pathRoute, verbs]) => {
       const route = (0, import_core2.getRoute)(pathRoute);
       let resolvedVerbs = verbs;
@@ -3496,6 +2934,7 @@ var getApiBuilder = async ({
         input,
         output,
         route,
+        pathRoute,
         context: resolvedContext
       });
       if (output.override.useDeprecatedOperations === false) {
@@ -3524,12 +2963,14 @@ var getApiBuilder = async ({
         },
         []
       );
-      let fullRoute = route;
-      if (output.baseUrl) {
-        if (output.baseUrl.endsWith("/") && route.startsWith("/")) {
-          fullRoute = route.slice(1);
-        }
-        fullRoute = `${output.baseUrl}${fullRoute}`;
+      const fullRoute = (0, import_core2.getFullRoute)(
+        route,
+        verbs.servers ?? context.specs[context.specKey].servers,
+        output.baseUrl
+      );
+      if (!output.target) {
+        (0, import_core2.logError)("Output does not have a target");
+        process.exit(1);
       }
       const pathOperations = await generateOperations(
         output.client,
@@ -3540,28 +2981,39 @@ var getApiBuilder = async ({
           override: output.override,
           context: resolvedContext,
           mock: output.mock,
-          // @ts-expect-error // FIXME
           output: output.target
         },
         output
       );
+      verbsOptions.forEach((verbOption) => {
+        acc.verbOptions[verbOption.operationId] = verbOption;
+      });
       acc.schemas.push(...schemas);
       acc.operations = { ...acc.operations, ...pathOperations };
       return acc;
     },
     {
       operations: {},
+      verbOptions: {},
       schemas: []
     }
+  );
+  const extraFiles = await generateExtraFiles(
+    output.client,
+    api.verbOptions,
+    output,
+    context
   );
   return {
     operations: api.operations,
     schemas: api.schemas,
+    verbOptions: api.verbOptions,
     title: generateClientTitle,
     header: generateClientHeader,
     footer: generateClientFooter,
     imports: generateClientImports,
-    importsMock: import_mock.generateMockImports
+    importsMock: import_mock.generateMockImports,
+    extraFiles
   };
 };
 
@@ -3573,11 +3025,9 @@ var importOpenApi = async ({
   target,
   workspace
 }) => {
-  var _a;
   const specs = await generateInputSpecs({ specs: data, input, workspace });
-  const schemas = getApiSchemas({ output, target, workspace, specs });
+  const schemas = getApiSchemas({ input, output, target, workspace, specs });
   const api = await getApiBuilder({
-    // @ts-expect-error // FIXME
     input,
     output,
     context: {
@@ -3585,17 +3035,14 @@ var importOpenApi = async ({
       target,
       workspace,
       specs,
-      override: output.override,
-      tslint: output.tslint,
-      tsconfig: output.tsconfig,
-      packageJson: output.packageJson
+      output
     }
   });
   return {
     ...api,
     schemas: {
       ...schemas,
-      [target]: [...(_a = schemas[target]) != null ? _a : [], ...api.schemas]
+      [target]: [...schemas[target] ?? [], ...api.schemas]
     },
     target,
     info: specs[target].info
@@ -3606,8 +3053,7 @@ var generateInputSpecs = async ({
   input,
   workspace
 }) => {
-  var _a;
-  const transformerFn = ((_a = input.override) == null ? void 0 : _a.transformer) ? await (0, import_core3.dynamicImport)(input.override.transformer, workspace) : void 0;
+  const transformerFn = input.override?.transformer ? await (0, import_core3.dynamicImport)(input.override.transformer, workspace) : void 0;
   return (0, import_core3.asyncReduce)(
     Object.entries(specs),
     async (acc, [specKey, value]) => {
@@ -3618,7 +3064,7 @@ var generateInputSpecs = async ({
       );
       const transfomedSchema = transformerFn ? transformerFn(schema2) : schema2;
       if (input.validation) {
-        await (0, import_core3.ibmOpenapiValidator)(transfomedSchema);
+        await (0, import_core3.ibmOpenapiValidator)(transfomedSchema, input.validation);
       }
       acc[specKey] = transfomedSchema;
       return acc;
@@ -3627,59 +3073,60 @@ var generateInputSpecs = async ({
   );
 };
 var getApiSchemas = ({
+  input,
   output,
   target,
   workspace,
   specs
 }) => {
-  return Object.entries(specs).reduce((acc, [specKey, spec]) => {
-    var _a, _b, _c, _d;
-    const context = {
-      specKey,
-      target,
-      workspace,
-      specs,
-      override: output.override,
-      tslint: output.tslint,
-      tsconfig: output.tsconfig,
-      packageJson: output.packageJson
-    };
-    const schemaDefinition = (0, import_core3.generateSchemasDefinition)(
-      !spec.openapi ? getAllSchemas(spec, specKey) : (_a = spec.components) == null ? void 0 : _a.schemas,
-      context,
-      output.override.components.schemas.suffix
-    );
-    const responseDefinition = (0, import_core3.generateComponentDefinition)(
-      (_b = spec.components) == null ? void 0 : _b.responses,
-      context,
-      output.override.components.responses.suffix
-    );
-    const bodyDefinition = (0, import_core3.generateComponentDefinition)(
-      (_c = spec.components) == null ? void 0 : _c.requestBodies,
-      context,
-      output.override.components.requestBodies.suffix
-    );
-    const parameters = (0, import_core3.generateParameterDefinition)(
-      (_d = spec.components) == null ? void 0 : _d.parameters,
-      context,
-      output.override.components.parameters.suffix
-    );
-    const schemas = [
-      ...schemaDefinition,
-      ...responseDefinition,
-      ...bodyDefinition,
-      ...parameters
-    ];
-    if (!schemas.length) {
+  return Object.entries(specs).reduce(
+    (acc, [specKey, spec]) => {
+      const context = {
+        specKey,
+        target,
+        workspace,
+        specs,
+        output
+      };
+      const parsedSchemas = spec.openapi ? spec.components?.schemas : getAllSchemas(spec, specKey);
+      const schemaDefinition = (0, import_core3.generateSchemasDefinition)(
+        parsedSchemas,
+        context,
+        output.override.components.schemas.suffix,
+        input.filters
+      );
+      const responseDefinition = (0, import_core3.generateComponentDefinition)(
+        spec.components?.responses,
+        context,
+        output.override.components.responses.suffix
+      );
+      const bodyDefinition = (0, import_core3.generateComponentDefinition)(
+        spec.components?.requestBodies,
+        context,
+        output.override.components.requestBodies.suffix
+      );
+      const parameters = (0, import_core3.generateParameterDefinition)(
+        spec.components?.parameters,
+        context,
+        output.override.components.parameters.suffix
+      );
+      const schemas = [
+        ...schemaDefinition,
+        ...responseDefinition,
+        ...bodyDefinition,
+        ...parameters
+      ];
+      if (!schemas.length) {
+        return acc;
+      }
+      acc[specKey] = schemas;
       return acc;
-    }
-    acc[specKey] = schemas;
-    return acc;
-  }, {});
+    },
+    {}
+  );
 };
 var getAllSchemas = (spec, specKey) => {
-  var _a;
-  const cleanedSpec = (0, import_lodash.default)(spec, [
+  const keysToOmit = [
     "openapi",
     "info",
     "servers",
@@ -3688,20 +3135,28 @@ var getAllSchemas = (spec, specKey) => {
     "security",
     "tags",
     "externalDocs"
-  ]);
+  ];
+  const cleanedSpec = Object.fromEntries(
+    Object.entries(spec).filter(([key]) => !keysToOmit.includes(key))
+  );
   if (specKey && (0, import_core3.isSchema)(cleanedSpec)) {
     const name = import_core3.upath.getSchemaFileName(specKey);
+    const additionalKeysToOmit = [
+      "type",
+      "properties",
+      "allOf",
+      "oneOf",
+      "anyOf",
+      "items"
+    ];
     return {
       [name]: cleanedSpec,
       ...getAllSchemas(
-        (0, import_lodash.default)(cleanedSpec, [
-          "type",
-          "properties",
-          "allOf",
-          "oneOf",
-          "anyOf",
-          "items"
-        ])
+        Object.fromEntries(
+          Object.entries(cleanedSpec).filter(
+            ([key]) => !additionalKeysToOmit.includes(key)
+          )
+        )
       )
     };
   }
@@ -3720,7 +3175,7 @@ var getAllSchemas = (spec, specKey) => {
   );
   return {
     ...schemas,
-    ...(_a = spec == null ? void 0 : spec.components) == null ? void 0 : _a.schemas
+    ...spec?.components?.schemas
   };
 };
 
@@ -3731,7 +3186,7 @@ var resolveSpecs = async (path, { validate, ...options }, isUrl3, isOnlySchema) 
       try {
         await import_swagger_parser.default.validate(path, options);
       } catch (e) {
-        if ((e == null ? void 0 : e.name) === "ParserError") {
+        if (e?.name === "ParserError") {
           throw e;
         }
         if (!isOnlySchema) {
@@ -3744,7 +3199,7 @@ var resolveSpecs = async (path, { validate, ...options }, isUrl3, isOnlySchema) 
       return data;
     }
     return Object.fromEntries(
-      Object.entries(data).map(([key, value]) => [import_core4.upath.resolve(key), value])
+      Object.entries(data).sort().map(([key, value]) => [import_core4.upath.resolve(key), value])
     );
   } catch {
     const file = await import_fs_extra.default.readFile(path, "utf8");
@@ -3755,10 +3210,9 @@ var resolveSpecs = async (path, { validate, ...options }, isUrl3, isOnlySchema) 
 };
 var importSpecs = async (workspace, options) => {
   const { input, output } = options;
-  if ((0, import_core4.isObject)(input.target)) {
+  if (!(0, import_core4.isString)(input.target)) {
     return importOpenApi({
       data: { [workspace]: input.target },
-      // @ts-expect-error // FIXME
       input,
       output,
       target: workspace,
@@ -3767,7 +3221,6 @@ var importSpecs = async (workspace, options) => {
   }
   const isPathUrl = (0, import_core4.isUrl)(input.target);
   const data = await resolveSpecs(
-    // @ts-expect-error // FIXME
     input.target,
     input.parserOptions,
     isPathUrl,
@@ -3775,25 +3228,23 @@ var importSpecs = async (workspace, options) => {
   );
   return importOpenApi({
     data,
-    // @ts-expect-error // FIXME
     input,
     output,
-    // @ts-expect-error // FIXME
     target: input.target,
     workspace
   });
 };
 
 // src/utils/options.ts
-var import_core7 = require("@orval/core");
+var import_core8 = require("@orval/core");
 var import_mock2 = require("@orval/mock");
-var import_chalk2 = __toESM(require("chalk"));
+var import_chalk3 = __toESM(require("chalk"));
 
 // package.json
 var package_default = {
   name: "orval",
   description: "A swagger client generator for typescript",
-  version: "6.23.0",
+  version: "7.8.0",
   license: "MIT",
   files: [
     "dist"
@@ -3822,7 +3273,8 @@ var package_default = {
     "vue-query",
     "vue",
     "swr",
-    "zod"
+    "zod",
+    "hono"
   ],
   author: {
     name: "Victor Bury",
@@ -3830,11 +3282,11 @@ var package_default = {
   },
   repository: {
     type: "git",
-    url: "https://github.com/anymaniax/orval"
+    url: "git+https://github.com/orval-labs/orval.git"
   },
   scripts: {
-    build: "tsup ./src/bin/orval.ts ./src/index.ts --target node12 --clean --dts",
-    dev: "tsup ./src/bin/orval.ts ./src/index.ts --target node12 --clean --watch ./src --onSuccess 'yarn generate-api'",
+    build: "tsup ./src/bin/orval.ts ./src/index.ts --clean",
+    dev: "tsup ./src/bin/orval.ts ./src/index.ts --target node12 --clean --sourcemap --watch ./src --onSuccess 'yarn generate-api'",
     lint: "eslint src/**/*.ts",
     "generate-api": "node ./dist/bin/orval.js --config ../../samples/react-query/basic/orval.config.ts",
     test: "tsc --noEmit && vitest --passWithNoTests"
@@ -3842,30 +3294,36 @@ var package_default = {
   devDependencies: {
     "@types/inquirer": "^9.0.6",
     "@types/js-yaml": "^4.0.8",
-    "@types/lodash.uniq": "^4.5.8"
+    "@types/lodash.uniq": "^4.5.8",
+    "typedoc-plugin-coverage": "^3.4.1"
   },
   dependencies: {
-    "@apidevtools/swagger-parser": "^10.1.0",
-    "@orval/angular": "6.23.0",
-    "@orval/axios": "6.23.0",
-    "@orval/core": "6.23.0",
-    "@orval/mock": "6.23.0",
-    "@orval/query": "6.23.0",
-    "@orval/swr": "6.23.0",
-    "@orval/zod": "6.23.0",
-    ajv: "^8.12.0",
+    "@apidevtools/swagger-parser": "^10.1.1",
+    "@orval/angular": "7.8.0",
+    "@orval/axios": "7.8.0",
+    "@orval/core": "7.8.0",
+    "@orval/fetch": "7.8.0",
+    "@orval/hono": "7.8.0",
+    "@orval/mcp": "7.8.0",
+    "@orval/mock": "7.8.0",
+    "@orval/query": "7.8.0",
+    "@orval/swr": "7.8.0",
+    "@orval/zod": "7.8.0",
+    ajv: "^8.17.1",
     cac: "^6.7.14",
     chalk: "^4.1.2",
-    chokidar: "^3.5.3",
+    chokidar: "^4.0.3",
     enquirer: "^2.4.1",
     execa: "^5.1.1",
     "find-up": "5.0.0",
     "fs-extra": "^11.2.0",
     "lodash.uniq": "^4.5.0",
-    "openapi-types": "^12.1.3",
-    "openapi3-ts": "^3.2.0",
+    "openapi3-ts": "4.2.2",
     "string-argv": "^0.3.2",
-    tsconfck: "^2.0.1"
+    tsconfck: "^2.0.1",
+    typedoc: "^0.28.0",
+    "typedoc-plugin-markdown": "^4.4.2",
+    typescript: "^5.6.3"
   }
 };
 
@@ -3965,7 +3423,6 @@ var getGithubAcessToken = async (githubTokenPath) => {
   }
 };
 var getGithubOpenApi = async (url) => {
-  var _a, _b, _c, _d;
   const githubTokenPath = import_core5.upath.join(__dirname, ".githubToken");
   const accessToken = await getGithubAcessToken(githubTokenPath);
   const [info] = url.split("github.com/").slice(-1);
@@ -3973,9 +3430,9 @@ var getGithubOpenApi = async (url) => {
   const path = paths.join("/");
   try {
     const { body } = await request(...getGithubSpecReq({ accessToken, repo, owner, branch, path }));
-    if ((_a = body.errors) == null ? void 0 : _a.length) {
-      const isErrorRemoveLink = (_b = body.errors) == null ? void 0 : _b.some(
-        (error) => (error == null ? void 0 : error.type) === "NOT_FOUND"
+    if (body.errors?.length) {
+      const isErrorRemoveLink = body.errors?.some(
+        (error) => error?.type === "NOT_FOUND"
       );
       if (isErrorRemoveLink) {
         const answers = await (0, import_enquirer.prompt)([
@@ -3990,7 +3447,7 @@ var getGithubOpenApi = async (url) => {
         }
       }
     }
-    return (_d = (_c = body.data) == null ? void 0 : _c.repository) == null ? void 0 : _d.object.text;
+    return body.data?.repository?.object.text;
   } catch (e) {
     if (!e.body) {
       throw `Oups... \u{1F37B}. ${e}`;
@@ -4021,6 +3478,8 @@ var githubResolver = {
 };
 
 // src/utils/package-json.ts
+var import_core6 = require("@orval/core");
+var import_chalk2 = __toESM(require("chalk"));
 var import_find_up = __toESM(require("find-up"));
 var import_fs_extra3 = __toESM(require("fs-extra"));
 var loadPackageJson = async (packageJson, workspace = process.cwd()) => {
@@ -4029,27 +3488,86 @@ var loadPackageJson = async (packageJson, workspace = process.cwd()) => {
       cwd: workspace
     });
     if (pkgPath) {
-      const pkg = await Promise.resolve().then(() => __toESM(require(pkgPath)));
-      return pkg;
+      const pkg = await import(pkgPath);
+      return await maybeReplaceCatalog(pkg, workspace);
     }
     return;
   }
   const normalizedPath = normalizePath(packageJson, workspace);
   if (import_fs_extra3.default.existsSync(normalizedPath)) {
-    const pkg = await Promise.resolve().then(() => __toESM(require(normalizedPath)));
-    return pkg;
+    const pkg = await import(normalizedPath);
+    return await maybeReplaceCatalog(pkg, workspace);
   }
   return;
 };
+var maybeReplaceCatalog = async (pkg, workspace) => {
+  if (![
+    ...Object.entries(pkg.dependencies ?? {}),
+    ...Object.entries(pkg.devDependencies ?? {}),
+    ...Object.entries(pkg.peerDependencies ?? {})
+  ].some(([key]) => key.startsWith("catalog:"))) {
+    return pkg;
+  }
+  const filePath = await (0, import_find_up.default)("pnpm-workspace.yaml", { cwd: workspace });
+  if (!filePath) {
+    (0, import_core6.log)(
+      `\u26A0\uFE0F  ${import_chalk2.default.yellow("package.json contains pnpm catalog: in dependencies, but no pnpm-workspace.yaml was found.")}`
+    );
+    return pkg;
+  }
+  const file = await import_fs_extra3.default.readFile(filePath, "utf8");
+  const pnpmWorkspaceFile = js_yaml_default.load(file);
+  performSubstitution(pkg.dependencies, pnpmWorkspaceFile);
+  performSubstitution(pkg.devDependencies, pnpmWorkspaceFile);
+  performSubstitution(pkg.peerDependencies, pnpmWorkspaceFile);
+  return pkg;
+};
+var performSubstitution = (dependencies, pnpmWorkspaceFile) => {
+  if (!dependencies) return;
+  for (const [packageName, version] of Object.entries(dependencies)) {
+    if (version === "catalog:" || version === "catalog:default") {
+      if (!pnpmWorkspaceFile.catalog) {
+        (0, import_core6.log)(
+          `\u26A0\uFE0F  ${import_chalk2.default.yellow(`when reading from pnpm-workspace.yaml, catalog: substitution for the package '${packageName}' failed as there were no default catalog.`)}`
+        );
+        continue;
+      }
+      const sub = pnpmWorkspaceFile.catalog[packageName];
+      if (!sub) {
+        (0, import_core6.log)(
+          `\u26A0\uFE0F  ${import_chalk2.default.yellow(`when reading from pnpm-workspace.yaml, catalog: substitution for the package '${packageName}' failed as there were no matching package in the default catalog.`)}`
+        );
+        continue;
+      }
+      dependencies[packageName] = sub;
+    } else if (version.startsWith("catalog:")) {
+      const catalogName = version.substring("catalog:".length);
+      const catalog = pnpmWorkspaceFile.catalogs?.[catalogName];
+      if (!catalog) {
+        (0, import_core6.log)(
+          `\u26A0\uFE0F  ${import_chalk2.default.yellow(`when reading from pnpm-workspace.yaml, '${version}' substitution for the package '${packageName}' failed as there were no matching catalog named '${catalogName}'. (available named catalogs are: ${Object.keys(pnpmWorkspaceFile.catalogs ?? {}).join(", ")})`)}`
+        );
+        continue;
+      }
+      const sub = catalog[packageName];
+      if (!sub) {
+        (0, import_core6.log)(
+          `\u26A0\uFE0F  ${import_chalk2.default.yellow(`when reading from pnpm-workspace.yaml, '${version}' substitution for the package '${packageName}' failed as there were no package in the catalog named '${catalogName}'. (packages in the catalog are: ${Object.keys(catalog).join(", ")})`)}`
+        );
+        continue;
+      }
+      dependencies[packageName] = sub;
+    }
+  }
+};
 
 // src/utils/tsconfig.ts
-var import_core6 = require("@orval/core");
+var import_core7 = require("@orval/core");
 var import_find_up2 = __toESM(require("find-up"));
 var import_fs_extra4 = __toESM(require("fs-extra"));
 var import_tsconfck = require("tsconfck");
 var loadTsconfig = async (tsconfig, workspace = process.cwd()) => {
-  var _a, _b;
-  if ((0, import_core6.isUndefined)(tsconfig)) {
+  if ((0, import_core7.isUndefined)(tsconfig)) {
     const configPath = await (0, import_find_up2.default)(["tsconfig.json", "jsconfig.json"], {
       cwd: workspace
     });
@@ -4059,18 +3577,18 @@ var loadTsconfig = async (tsconfig, workspace = process.cwd()) => {
     }
     return;
   }
-  if ((0, import_core6.isString)(tsconfig)) {
+  if ((0, import_core7.isString)(tsconfig)) {
     const normalizedPath = normalizePath(tsconfig, workspace);
     if (import_fs_extra4.default.existsSync(normalizedPath)) {
       const config = await (0, import_tsconfck.parse)(normalizedPath);
-      const tsconfig2 = ((_b = (_a = config.referenced) == null ? void 0 : _a.find(
+      const tsconfig2 = config.referenced?.find(
         ({ tsconfigFile }) => tsconfigFile === normalizedPath
-      )) == null ? void 0 : _b.tsconfig) || config.tsconfig;
+      )?.tsconfig || config.tsconfig;
       return tsconfig2;
     }
     return;
   }
-  if ((0, import_core6.isObject)(tsconfig)) {
+  if ((0, import_core7.isObject)(tsconfig)) {
     return tsconfig;
   }
   return;
@@ -4080,24 +3598,47 @@ var loadTsconfig = async (tsconfig, workspace = process.cwd()) => {
 function defineConfig(options) {
   return options;
 }
+var createFormData = (workspace, formData) => {
+  const defaultArrayHandling = import_core8.FormDataArrayHandling.SERIALIZE;
+  if (formData === void 0)
+    return { disabled: false, arrayHandling: defaultArrayHandling };
+  if ((0, import_core8.isBoolean)(formData))
+    return { disabled: !formData, arrayHandling: defaultArrayHandling };
+  if ((0, import_core8.isString)(formData))
+    return {
+      disabled: false,
+      mutator: normalizeMutator(workspace, formData),
+      arrayHandling: defaultArrayHandling
+    };
+  if ("mutator" in formData || "arrayHandling" in formData)
+    return {
+      disabled: false,
+      mutator: normalizeMutator(workspace, formData.mutator),
+      arrayHandling: formData.arrayHandling ?? defaultArrayHandling
+    };
+  return {
+    disabled: false,
+    mutator: normalizeMutator(workspace, formData),
+    arrayHandling: defaultArrayHandling
+  };
+};
 var normalizeOptions = async (optionsExport, workspace = process.cwd(), globalOptions = {}) => {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _A, _B, _C, _D, _E, _F, _G, _H, _I, _J, _K, _L, _M, _N, _O, _P, _Q, _R, _S, _T, _U, _V, _W, _X, _Y, _Z, __, _$, _aa, _ba, _ca, _da, _ea, _fa, _ga, _ha, _ia, _ja, _ka, _la, _ma, _na, _oa, _pa, _qa;
-  const options = await ((0, import_core7.isFunction)(optionsExport) ? optionsExport() : optionsExport);
+  const options = await ((0, import_core8.isFunction)(optionsExport) ? optionsExport() : optionsExport);
   if (!options.input) {
-    (0, import_core7.createLogger)().error(import_chalk2.default.red(`Config require an input`));
+    (0, import_core8.createLogger)().error(import_chalk3.default.red(`Config require an input`));
     process.exit(1);
   }
   if (!options.output) {
-    (0, import_core7.createLogger)().error(import_chalk2.default.red(`Config require an output`));
+    (0, import_core8.createLogger)().error(import_chalk3.default.red(`Config require an output`));
     process.exit(1);
   }
-  const inputOptions = (0, import_core7.isString)(options.input) ? { target: options.input } : options.input;
-  const outputOptions = (0, import_core7.isString)(options.output) ? { target: options.output } : options.output;
+  const inputOptions = (0, import_core8.isString)(options.input) ? { target: options.input } : options.input;
+  const outputOptions = (0, import_core8.isString)(options.output) ? { target: options.output } : options.output;
   const outputWorkspace = normalizePath(
     outputOptions.workspace || "",
     workspace
   );
-  const { clean, prettier, client, mode, tslint } = globalOptions;
+  const { clean, prettier, client, httpClient, mode, tslint, biome } = globalOptions;
   const tsconfig = await loadTsconfig(
     outputOptions.tsconfig || globalOptions.tsconfig,
     workspace
@@ -4106,129 +3647,215 @@ var normalizeOptions = async (optionsExport, workspace = process.cwd(), globalOp
     outputOptions.packageJson || globalOptions.packageJson,
     workspace
   );
-  let mock2 = (_a = outputOptions.mock) != null ? _a : globalOptions.mock;
-  if (typeof mock2 === "boolean" && mock2) {
+  const mockOption = outputOptions.mock ?? globalOptions.mock;
+  let mock2;
+  if (typeof mockOption === "boolean" && mockOption) {
     mock2 = import_mock2.DEFAULT_MOCK_OPTIONS;
-  } else if (!mock2) {
+  } else if ((0, import_core8.isFunction)(mockOption)) {
+    mock2 = mockOption;
+  } else if (!mockOption) {
     mock2 = void 0;
   } else {
     mock2 = {
       ...import_mock2.DEFAULT_MOCK_OPTIONS,
-      ...mock2
+      ...mockOption
     };
   }
+  const defaultFileExtension = ".ts";
+  const globalQueryOptions = {
+    useQuery: true,
+    useMutation: true,
+    signal: true,
+    shouldExportMutatorHooks: true,
+    shouldExportHttpClient: true,
+    shouldExportQueryKey: true,
+    shouldSplitQueryKey: false,
+    ...normalizeQueryOptions(outputOptions.override?.query, workspace)
+  };
   const normalizedOptions = {
     input: {
       target: globalOptions.input ? normalizePathOrUrl(globalOptions.input, process.cwd()) : normalizePathOrUrl(inputOptions.target, workspace),
       validation: inputOptions.validation || false,
       override: {
         transformer: normalizePath(
-          (_b = inputOptions.override) == null ? void 0 : _b.transformer,
+          inputOptions.override?.transformer,
           workspace
         )
       },
-      converterOptions: (_c = inputOptions.converterOptions) != null ? _c : {},
-      parserOptions: (0, import_core7.mergeDeep)(
+      converterOptions: inputOptions.converterOptions ?? {},
+      parserOptions: (0, import_core8.mergeDeep)(
         parserDefaultOptions,
-        (_d = inputOptions.parserOptions) != null ? _d : {}
+        inputOptions.parserOptions ?? {}
       ),
       filters: inputOptions.filters
     },
     output: {
       target: globalOptions.output ? normalizePath(globalOptions.output, process.cwd()) : normalizePath(outputOptions.target, outputWorkspace),
       schemas: normalizePath(outputOptions.schemas, outputWorkspace),
+      namingConvention: outputOptions.namingConvention || import_core8.NamingConvention.CAMEL_CASE,
+      fileExtension: outputOptions.fileExtension || defaultFileExtension,
       workspace: outputOptions.workspace ? outputWorkspace : void 0,
-      client: (_f = (_e = outputOptions.client) != null ? _e : client) != null ? _f : import_core7.OutputClient.AXIOS_FUNCTIONS,
-      mode: normalizeOutputMode((_g = outputOptions.mode) != null ? _g : mode),
+      client: outputOptions.client ?? client ?? import_core8.OutputClient.AXIOS_FUNCTIONS,
+      httpClient: outputOptions.httpClient ?? httpClient ?? import_core8.OutputHttpClient.AXIOS,
+      mode: normalizeOutputMode(outputOptions.mode ?? mode),
       mock: mock2,
-      clean: (_i = (_h = outputOptions.clean) != null ? _h : clean) != null ? _i : false,
-      prettier: (_k = (_j = outputOptions.prettier) != null ? _j : prettier) != null ? _k : false,
-      tslint: (_m = (_l = outputOptions.tslint) != null ? _l : tslint) != null ? _m : false,
+      clean: outputOptions.clean ?? clean ?? false,
+      docs: outputOptions.docs ?? false,
+      prettier: outputOptions.prettier ?? prettier ?? false,
+      tslint: outputOptions.tslint ?? tslint ?? false,
+      biome: outputOptions.biome ?? biome ?? false,
       tsconfig,
       packageJson,
-      headers: (_n = outputOptions.headers) != null ? _n : false,
-      indexFiles: (_o = outputOptions.indexFiles) != null ? _o : true,
+      headers: outputOptions.headers ?? false,
+      indexFiles: outputOptions.indexFiles ?? true,
       baseUrl: outputOptions.baseUrl,
+      unionAddMissingProperties: outputOptions.unionAddMissingProperties ?? false,
       override: {
         ...outputOptions.override,
         mock: {
-          arrayMin: (_r = (_q = (_p = outputOptions.override) == null ? void 0 : _p.mock) == null ? void 0 : _q.arrayMin) != null ? _r : 1,
-          arrayMax: (_u = (_t = (_s = outputOptions.override) == null ? void 0 : _s.mock) == null ? void 0 : _t.arrayMax) != null ? _u : 10,
-          ...(_w = (_v = outputOptions.override) == null ? void 0 : _v.mock) != null ? _w : {}
+          arrayMin: outputOptions.override?.mock?.arrayMin ?? 1,
+          arrayMax: outputOptions.override?.mock?.arrayMax ?? 10,
+          ...outputOptions.override?.mock ?? {}
         },
         operations: normalizeOperationsAndTags(
-          (_y = (_x = outputOptions.override) == null ? void 0 : _x.operations) != null ? _y : {},
-          outputWorkspace
+          outputOptions.override?.operations ?? {},
+          outputWorkspace,
+          {
+            query: globalQueryOptions
+          }
         ),
         tags: normalizeOperationsAndTags(
-          (_A = (_z = outputOptions.override) == null ? void 0 : _z.tags) != null ? _A : {},
-          outputWorkspace
+          outputOptions.override?.tags ?? {},
+          outputWorkspace,
+          {
+            query: globalQueryOptions
+          }
         ),
         mutator: normalizeMutator(
           outputWorkspace,
-          (_B = outputOptions.override) == null ? void 0 : _B.mutator
+          outputOptions.override?.mutator
         ),
-        formData: (_F = !(0, import_core7.isBoolean)((_C = outputOptions.override) == null ? void 0 : _C.formData) ? normalizeMutator(
+        formData: createFormData(
           outputWorkspace,
-          (_D = outputOptions.override) == null ? void 0 : _D.formData
-        ) : (_E = outputOptions.override) == null ? void 0 : _E.formData) != null ? _F : true,
-        formUrlEncoded: (_J = !(0, import_core7.isBoolean)((_G = outputOptions.override) == null ? void 0 : _G.formUrlEncoded) ? normalizeMutator(
+          outputOptions.override?.formData
+        ),
+        formUrlEncoded: (!(0, import_core8.isBoolean)(outputOptions.override?.formUrlEncoded) ? normalizeMutator(
           outputWorkspace,
-          (_H = outputOptions.override) == null ? void 0 : _H.formUrlEncoded
-        ) : (_I = outputOptions.override) == null ? void 0 : _I.formUrlEncoded) != null ? _J : true,
+          outputOptions.override?.formUrlEncoded
+        ) : outputOptions.override?.formUrlEncoded) ?? true,
         paramsSerializer: normalizeMutator(
           outputWorkspace,
-          (_K = outputOptions.override) == null ? void 0 : _K.paramsSerializer
+          outputOptions.override?.paramsSerializer
         ),
-        header: ((_L = outputOptions.override) == null ? void 0 : _L.header) === false ? false : (0, import_core7.isFunction)((_M = outputOptions.override) == null ? void 0 : _M.header) ? (_N = outputOptions.override) == null ? void 0 : _N.header : getDefaultFilesHeader,
-        requestOptions: (_P = (_O = outputOptions.override) == null ? void 0 : _O.requestOptions) != null ? _P : true,
+        header: outputOptions.override?.header === false ? false : (0, import_core8.isFunction)(outputOptions.override?.header) ? outputOptions.override?.header : getDefaultFilesHeader,
+        requestOptions: outputOptions.override?.requestOptions ?? true,
         components: {
           schemas: {
-            suffix: import_core7.RefComponentSuffix.schemas,
-            itemSuffix: (_T = (_S = (_R = (_Q = outputOptions.override) == null ? void 0 : _Q.components) == null ? void 0 : _R.schemas) == null ? void 0 : _S.itemSuffix) != null ? _T : "Item",
-            ...(_W = (_V = (_U = outputOptions.override) == null ? void 0 : _U.components) == null ? void 0 : _V.schemas) != null ? _W : {}
+            suffix: import_core8.RefComponentSuffix.schemas,
+            itemSuffix: outputOptions.override?.components?.schemas?.itemSuffix ?? "Item",
+            ...outputOptions.override?.components?.schemas ?? {}
           },
           responses: {
-            suffix: import_core7.RefComponentSuffix.responses,
-            ...(_Z = (_Y = (_X = outputOptions.override) == null ? void 0 : _X.components) == null ? void 0 : _Y.responses) != null ? _Z : {}
+            suffix: import_core8.RefComponentSuffix.responses,
+            ...outputOptions.override?.components?.responses ?? {}
           },
           parameters: {
-            suffix: import_core7.RefComponentSuffix.parameters,
-            ...(_aa = (_$ = (__ = outputOptions.override) == null ? void 0 : __.components) == null ? void 0 : _$.parameters) != null ? _aa : {}
+            suffix: import_core8.RefComponentSuffix.parameters,
+            ...outputOptions.override?.components?.parameters ?? {}
           },
           requestBodies: {
-            suffix: import_core7.RefComponentSuffix.requestBodies,
-            ...(_da = (_ca = (_ba = outputOptions.override) == null ? void 0 : _ba.components) == null ? void 0 : _ca.requestBodies) != null ? _da : {}
+            suffix: import_core8.RefComponentSuffix.requestBodies,
+            ...outputOptions.override?.components?.requestBodies ?? {}
           }
         },
-        query: {
-          useQuery: true,
-          useMutation: true,
-          signal: true,
-          ...normalizeQueryOptions((_ea = outputOptions.override) == null ? void 0 : _ea.query, workspace)
+        hono: normalizeHonoOptions(outputOptions.override?.hono, workspace),
+        query: globalQueryOptions,
+        zod: {
+          strict: {
+            param: outputOptions.override?.zod?.strict?.param ?? false,
+            query: outputOptions.override?.zod?.strict?.query ?? false,
+            header: outputOptions.override?.zod?.strict?.header ?? false,
+            body: outputOptions.override?.zod?.strict?.body ?? false,
+            response: outputOptions.override?.zod?.strict?.response ?? false
+          },
+          generate: {
+            param: outputOptions.override?.zod?.generate?.param ?? true,
+            query: outputOptions.override?.zod?.generate?.query ?? true,
+            header: outputOptions.override?.zod?.generate?.header ?? true,
+            body: outputOptions.override?.zod?.generate?.body ?? true,
+            response: outputOptions.override?.zod?.generate?.response ?? true
+          },
+          coerce: {
+            param: outputOptions.override?.zod?.coerce?.param ?? false,
+            query: outputOptions.override?.zod?.coerce?.query ?? false,
+            header: outputOptions.override?.zod?.coerce?.header ?? false,
+            body: outputOptions.override?.zod?.coerce?.body ?? false,
+            response: outputOptions.override?.zod?.coerce?.response ?? false
+          },
+          preprocess: {
+            ...outputOptions.override?.zod?.preprocess?.param ? {
+              param: normalizeMutator(
+                workspace,
+                outputOptions.override.zod.preprocess.param
+              )
+            } : {},
+            ...outputOptions.override?.zod?.preprocess?.query ? {
+              query: normalizeMutator(
+                workspace,
+                outputOptions.override.zod.preprocess.query
+              )
+            } : {},
+            ...outputOptions.override?.zod?.preprocess?.header ? {
+              header: normalizeMutator(
+                workspace,
+                outputOptions.override.zod.preprocess.header
+              )
+            } : {},
+            ...outputOptions.override?.zod?.preprocess?.body ? {
+              body: normalizeMutator(
+                workspace,
+                outputOptions.override.zod.preprocess.body
+              )
+            } : {},
+            ...outputOptions.override?.zod?.preprocess?.response ? {
+              response: normalizeMutator(
+                workspace,
+                outputOptions.override.zod.preprocess.response
+              )
+            } : {}
+          },
+          generateEachHttpStatus: outputOptions.override?.zod?.generateEachHttpStatus ?? false,
+          dateTimeOptions: outputOptions.override?.zod?.dateTimeOptions ?? {}
         },
         swr: {
-          ...(_ga = (_fa = outputOptions.override) == null ? void 0 : _fa.swr) != null ? _ga : {}
+          ...outputOptions.override?.swr ?? {}
         },
         angular: {
-          provideIn: (_ja = (_ia = (_ha = outputOptions.override) == null ? void 0 : _ha.angular) == null ? void 0 : _ia.provideIn) != null ? _ja : "root"
+          provideIn: outputOptions.override?.angular?.provideIn ?? "root"
         },
-        useDates: ((_ka = outputOptions.override) == null ? void 0 : _ka.useDates) || false,
-        useDeprecatedOperations: (_ma = (_la = outputOptions.override) == null ? void 0 : _la.useDeprecatedOperations) != null ? _ma : true,
-        useNativeEnums: (_oa = (_na = outputOptions.override) == null ? void 0 : _na.useNativeEnums) != null ? _oa : false
+        fetch: {
+          includeHttpResponseReturnType: outputOptions.override?.fetch?.includeHttpResponseReturnType ?? true,
+          ...outputOptions.override?.fetch ?? {}
+        },
+        useDates: outputOptions.override?.useDates || false,
+        useDeprecatedOperations: outputOptions.override?.useDeprecatedOperations ?? true,
+        enumGenerationType: outputOptions.override?.useNativeEnums ?? false ? "enum" : outputOptions.override?.enumGenerationType ?? "const",
+        suppressReadonlyModifier: outputOptions.override?.suppressReadonlyModifier || false
       },
-      allParamsOptional: (_pa = outputOptions.allParamsOptional) != null ? _pa : false,
-      urlEncodeParameters: (_qa = outputOptions.urlEncodeParameters) != null ? _qa : false
+      allParamsOptional: outputOptions.allParamsOptional ?? false,
+      urlEncodeParameters: outputOptions.urlEncodeParameters ?? false,
+      optionsParamRequired: outputOptions.optionsParamRequired ?? false,
+      propertySortOrder: outputOptions.propertySortOrder ?? import_core8.PropertySortOrder.SPECIFICATION
     },
     hooks: options.hooks ? normalizeHooks(options.hooks) : {}
   };
   if (!normalizedOptions.input.target) {
-    (0, import_core7.createLogger)().error(import_chalk2.default.red(`Config require an input target`));
+    (0, import_core8.createLogger)().error(import_chalk3.default.red(`Config require an input target`));
     process.exit(1);
   }
   if (!normalizedOptions.output.target && !normalizedOptions.output.schemas) {
-    (0, import_core7.createLogger)().error(
-      import_chalk2.default.red(`Config require an output target or schemas`)
+    (0, import_core8.createLogger)().error(
+      import_chalk3.default.red(`Config require an output target or schemas`)
     );
     process.exit(1);
   }
@@ -4239,39 +3866,38 @@ var parserDefaultOptions = {
   resolve: { github: githubResolver }
 };
 var normalizeMutator = (workspace, mutator) => {
-  var _a;
-  if ((0, import_core7.isObject)(mutator)) {
+  if ((0, import_core8.isObject)(mutator)) {
     if (!mutator.path) {
-      (0, import_core7.createLogger)().error(import_chalk2.default.red(`Mutator need a path`));
+      (0, import_core8.createLogger)().error(import_chalk3.default.red(`Mutator need a path`));
       process.exit(1);
     }
     return {
       ...mutator,
-      path: import_core7.upath.resolve(workspace, mutator.path),
-      default: (_a = mutator.default || !mutator.name) != null ? _a : false
+      path: import_core8.upath.resolve(workspace, mutator.path),
+      default: (mutator.default || !mutator.name) ?? false
     };
   }
-  if ((0, import_core7.isString)(mutator)) {
+  if ((0, import_core8.isString)(mutator)) {
     return {
-      path: import_core7.upath.resolve(workspace, mutator),
+      path: import_core8.upath.resolve(workspace, mutator),
       default: true
     };
   }
   return mutator;
 };
 var normalizePathOrUrl = (path, workspace) => {
-  if ((0, import_core7.isString)(path) && !(0, import_core7.isUrl)(path)) {
+  if ((0, import_core8.isString)(path) && !(0, import_core8.isUrl)(path)) {
     return normalizePath(path, workspace);
   }
   return path;
 };
 var normalizePath = (path, workspace) => {
-  if (!(0, import_core7.isString)(path)) {
+  if (!(0, import_core8.isString)(path)) {
     return path;
   }
-  return import_core7.upath.resolve(workspace, path);
+  return import_core8.upath.resolve(workspace, path);
 };
-var normalizeOperationsAndTags = (operationsOrTags, workspace) => {
+var normalizeOperationsAndTags = (operationsOrTags, workspace, global) => {
   return Object.fromEntries(
     Object.entries(operationsOrTags).map(
       ([
@@ -4283,6 +3909,7 @@ var normalizeOperationsAndTags = (operationsOrTags, workspace) => {
           formUrlEncoded,
           paramsSerializer,
           query: query2,
+          zod: zod2,
           ...rest
         }
       ]) => {
@@ -4291,15 +3918,72 @@ var normalizeOperationsAndTags = (operationsOrTags, workspace) => {
           {
             ...rest,
             ...query2 ? {
-              query: normalizeQueryOptions(query2, workspace)
+              query: normalizeQueryOptions(query2, workspace, global.query)
+            } : {},
+            ...zod2 ? {
+              zod: {
+                strict: {
+                  param: zod2.strict?.param ?? false,
+                  query: zod2.strict?.query ?? false,
+                  header: zod2.strict?.header ?? false,
+                  body: zod2.strict?.body ?? false,
+                  response: zod2.strict?.response ?? false
+                },
+                generate: {
+                  param: zod2.generate?.param ?? true,
+                  query: zod2.generate?.query ?? true,
+                  header: zod2.generate?.header ?? true,
+                  body: zod2.generate?.body ?? true,
+                  response: zod2.generate?.response ?? true
+                },
+                coerce: {
+                  param: zod2.coerce?.param ?? false,
+                  query: zod2.coerce?.query ?? false,
+                  header: zod2.coerce?.header ?? false,
+                  body: zod2.coerce?.body ?? false,
+                  response: zod2.coerce?.response ?? false
+                },
+                preprocess: {
+                  ...zod2.preprocess?.param ? {
+                    param: normalizeMutator(
+                      workspace,
+                      zod2.preprocess.param
+                    )
+                  } : {},
+                  ...zod2.preprocess?.query ? {
+                    query: normalizeMutator(
+                      workspace,
+                      zod2.preprocess.query
+                    )
+                  } : {},
+                  ...zod2.preprocess?.header ? {
+                    header: normalizeMutator(
+                      workspace,
+                      zod2.preprocess.header
+                    )
+                  } : {},
+                  ...zod2.preprocess?.body ? {
+                    body: normalizeMutator(
+                      workspace,
+                      zod2.preprocess.body
+                    )
+                  } : {},
+                  ...zod2.preprocess?.response ? {
+                    response: normalizeMutator(
+                      workspace,
+                      zod2.preprocess.response
+                    )
+                  } : {}
+                },
+                generateEachHttpStatus: zod2?.generateEachHttpStatus ?? false,
+                dateTimeOptions: zod2?.dateTimeOptions ?? {}
+              }
             } : {},
             ...transformer ? { transformer: normalizePath(transformer, workspace) } : {},
             ...mutator ? { mutator: normalizeMutator(workspace, mutator) } : {},
-            ...formData ? {
-              formData: !(0, import_core7.isBoolean)(formData) ? normalizeMutator(workspace, formData) : formData
-            } : {},
+            ...createFormData(workspace, formData),
             ...formUrlEncoded ? {
-              formUrlEncoded: !(0, import_core7.isBoolean)(formUrlEncoded) ? normalizeMutator(workspace, formUrlEncoded) : formUrlEncoded
+              formUrlEncoded: !(0, import_core8.isBoolean)(formUrlEncoded) ? normalizeMutator(workspace, formUrlEncoded) : formUrlEncoded
             } : {},
             ...paramsSerializer ? {
               paramsSerializer: normalizeMutator(
@@ -4315,18 +3999,18 @@ var normalizeOperationsAndTags = (operationsOrTags, workspace) => {
 };
 var normalizeOutputMode = (mode) => {
   if (!mode) {
-    return import_core7.OutputMode.SINGLE;
+    return import_core8.OutputMode.SINGLE;
   }
-  if (!Object.values(import_core7.OutputMode).includes(mode)) {
-    (0, import_core7.createLogger)().warn(import_chalk2.default.yellow(`Unknown the provided mode => ${mode}`));
-    return import_core7.OutputMode.SINGLE;
+  if (!Object.values(import_core8.OutputMode).includes(mode)) {
+    (0, import_core8.createLogger)().warn(import_chalk3.default.yellow(`Unknown the provided mode => ${mode}`));
+    return import_core8.OutputMode.SINGLE;
   }
   return mode;
 };
 var normalizeHooks = (hooks) => {
   const keys = Object.keys(hooks);
   return keys.reduce((acc, key) => {
-    if ((0, import_core7.isString)(hooks[key])) {
+    if ((0, import_core8.isString)(hooks[key])) {
       return {
         ...acc,
         [key]: [hooks[key]]
@@ -4336,7 +4020,12 @@ var normalizeHooks = (hooks) => {
         ...acc,
         [key]: hooks[key]
       };
-    } else if ((0, import_core7.isFunction)(hooks[key])) {
+    } else if ((0, import_core8.isFunction)(hooks[key])) {
+      return {
+        ...acc,
+        [key]: [hooks[key]]
+      };
+    } else if ((0, import_core8.isObject)(hooks[key])) {
       return {
         ...acc,
         [key]: [hooks[key]]
@@ -4345,45 +4034,84 @@ var normalizeHooks = (hooks) => {
     return acc;
   }, {});
 };
-var normalizeQueryOptions = (queryOptions = {}, outputWorkspace) => {
+var normalizeHonoOptions = (hono2 = {}, workspace) => {
+  return {
+    ...hono2.handlers ? { handlers: import_core8.upath.resolve(workspace, hono2.handlers) } : {},
+    compositeRoute: hono2.compositeRoute ?? "",
+    validator: hono2.validator ?? true,
+    validatorOutputPath: hono2.validatorOutputPath ? import_core8.upath.resolve(workspace, hono2.validatorOutputPath) : ""
+  };
+};
+var normalizeQueryOptions = (queryOptions = {}, outputWorkspace, globalOptions = {}) => {
   if (queryOptions.options) {
     console.warn(
       "[WARN] Using query options is deprecated and will be removed in a future major release. Please use queryOptions or mutationOptions instead."
     );
   }
   return {
-    ...!(0, import_core7.isUndefined)(queryOptions.usePrefetch) ? { usePrefetch: queryOptions.usePrefetch } : {},
-    ...!(0, import_core7.isUndefined)(queryOptions.useQuery) ? { useQuery: queryOptions.useQuery } : {},
-    ...!(0, import_core7.isUndefined)(queryOptions.useSuspenseQuery) ? { useSuspenseQuery: queryOptions.useSuspenseQuery } : {},
-    ...!(0, import_core7.isUndefined)(queryOptions.useMutation) ? { useMutation: queryOptions.useMutation } : {},
-    ...!(0, import_core7.isUndefined)(queryOptions.useInfinite) ? { useInfinite: queryOptions.useInfinite } : {},
-    ...!(0, import_core7.isUndefined)(queryOptions.useSuspenseInfiniteQuery) ? { useSuspenseInfiniteQuery: queryOptions.useSuspenseInfiniteQuery } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.usePrefetch) ? { usePrefetch: queryOptions.usePrefetch } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.useQuery) ? { useQuery: queryOptions.useQuery } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.useSuspenseQuery) ? { useSuspenseQuery: queryOptions.useSuspenseQuery } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.useMutation) ? { useMutation: queryOptions.useMutation } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.useInfinite) ? { useInfinite: queryOptions.useInfinite } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.useSuspenseInfiniteQuery) ? { useSuspenseInfiniteQuery: queryOptions.useSuspenseInfiniteQuery } : {},
     ...queryOptions.useInfiniteQueryParam ? { useInfiniteQueryParam: queryOptions.useInfiniteQueryParam } : {},
     ...queryOptions.options ? { options: queryOptions.options } : {},
-    ...(queryOptions == null ? void 0 : queryOptions.queryKey) ? {
-      queryKey: normalizeMutator(outputWorkspace, queryOptions == null ? void 0 : queryOptions.queryKey)
+    ...globalOptions.queryKey ? {
+      queryKey: globalOptions.queryKey
     } : {},
-    ...(queryOptions == null ? void 0 : queryOptions.queryOptions) ? {
+    ...queryOptions?.queryKey ? {
+      queryKey: normalizeMutator(outputWorkspace, queryOptions?.queryKey)
+    } : {},
+    ...globalOptions.queryOptions ? {
+      queryOptions: globalOptions.queryOptions
+    } : {},
+    ...queryOptions?.queryOptions ? {
       queryOptions: normalizeMutator(
         outputWorkspace,
-        queryOptions == null ? void 0 : queryOptions.queryOptions
+        queryOptions?.queryOptions
       )
     } : {},
-    ...(queryOptions == null ? void 0 : queryOptions.mutationOptions) ? {
+    ...globalOptions.mutationOptions ? {
+      mutationOptions: globalOptions.mutationOptions
+    } : {},
+    ...queryOptions?.mutationOptions ? {
       mutationOptions: normalizeMutator(
         outputWorkspace,
-        queryOptions == null ? void 0 : queryOptions.mutationOptions
+        queryOptions?.mutationOptions
       )
     } : {},
-    ...!(0, import_core7.isUndefined)(queryOptions.signal) ? { signal: queryOptions.signal } : {},
-    ...!(0, import_core7.isUndefined)(queryOptions.version) ? { version: queryOptions.version } : {}
+    ...!(0, import_core8.isUndefined)(globalOptions.shouldExportQueryKey) ? {
+      shouldExportQueryKey: globalOptions.shouldExportQueryKey
+    } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.shouldExportQueryKey) ? { shouldExportQueryKey: queryOptions.shouldExportQueryKey } : {},
+    ...!(0, import_core8.isUndefined)(globalOptions.shouldExportHttpClient) ? {
+      shouldExportHttpClient: globalOptions.shouldExportHttpClient
+    } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.shouldExportHttpClient) ? { shouldExportHttpClient: queryOptions.shouldExportHttpClient } : {},
+    ...!(0, import_core8.isUndefined)(globalOptions.shouldExportMutatorHooks) ? {
+      shouldExportMutatorHooks: globalOptions.shouldExportMutatorHooks
+    } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.shouldExportMutatorHooks) ? { shouldExportMutatorHooks: queryOptions.shouldExportMutatorHooks } : {},
+    ...!(0, import_core8.isUndefined)(globalOptions.shouldSplitQueryKey) ? {
+      shouldSplitQueryKey: globalOptions.shouldSplitQueryKey
+    } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.shouldSplitQueryKey) ? { shouldSplitQueryKey: queryOptions.shouldSplitQueryKey } : {},
+    ...!(0, import_core8.isUndefined)(globalOptions.signal) ? {
+      signal: globalOptions.signal
+    } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.signal) ? { signal: queryOptions.signal } : {},
+    ...!(0, import_core8.isUndefined)(globalOptions.version) ? {
+      version: globalOptions.version
+    } : {},
+    ...!(0, import_core8.isUndefined)(queryOptions.version) ? { version: queryOptions.version } : {}
   };
 };
 var getDefaultFilesHeader = ({
   title,
   description,
   version
-}) => [
+} = {}) => [
   `Generated by ${package_default.name} v${package_default.version} \u{1F37A}`,
   `Do not edit manually.`,
   ...title ? [title] : [],
@@ -4392,15 +4120,15 @@ var getDefaultFilesHeader = ({
 ];
 
 // src/utils/watcher.ts
-var import_core8 = require("@orval/core");
-var import_chalk3 = __toESM(require("chalk"));
+var import_core9 = require("@orval/core");
 var startWatcher = async (watchOptions, watchFn, defaultTarget = ".") => {
-  if (!watchOptions)
-    return;
-  const { watch } = await Promise.resolve().then(() => __toESM(require("chokidar")));
+  if (!watchOptions) return;
+  const { watch } = await import("chokidar");
   const ignored = ["**/{.git,node_modules}/**"];
-  const watchPaths = typeof watchOptions === "boolean" ? defaultTarget : Array.isArray(watchOptions) ? watchOptions.filter((path) => typeof path === "string") : watchOptions;
-  (0, import_core8.log)(
+  const watchPaths = typeof watchOptions === "boolean" ? defaultTarget : Array.isArray(watchOptions) ? watchOptions.filter(
+    (path) => typeof path === "string"
+  ) : watchOptions;
+  (0, import_core9.log)(
     `Watching for changes in ${Array.isArray(watchPaths) ? watchPaths.map((v) => '"' + v + '"').join(" | ") : '"' + watchPaths + '"'}`
   );
   const watcher = watch(watchPaths, {
@@ -4408,42 +4136,57 @@ var startWatcher = async (watchOptions, watchFn, defaultTarget = ".") => {
     ignored
   });
   watcher.on("all", async (type2, file) => {
-    (0, import_core8.log)(`Change detected: ${type2} ${file}`);
+    (0, import_core9.log)(`Change detected: ${type2} ${file}`);
     try {
       await watchFn();
     } catch (e) {
-      (0, import_core8.log)(import_chalk3.default.red(e));
+      (0, import_core9.logError)(e);
     }
   });
 };
 
 // src/write-specs.ts
-var import_core10 = require("@orval/core");
+var import_core11 = require("@orval/core");
 var import_chalk5 = __toESM(require("chalk"));
 var import_execa2 = __toESM(require("execa"));
 var import_fs_extra5 = __toESM(require("fs-extra"));
-var import_lodash2 = __toESM(require("lodash.uniq"));
+var import_lodash = __toESM(require("lodash.uniq"));
 
 // src/utils/executeHook.ts
-var import_core9 = require("@orval/core");
+var import_core10 = require("@orval/core");
 var import_chalk4 = __toESM(require("chalk"));
 var import_execa = __toESM(require("execa"));
 var import_string_argv = require("string-argv");
 var executeHook = async (name, commands = [], args = []) => {
-  (0, import_core9.log)(import_chalk4.default.white(`Running ${name} hook...`));
+  (0, import_core10.log)(import_chalk4.default.white(`Running ${name} hook...`));
   for (const command of commands) {
-    if ((0, import_core9.isString)(command)) {
-      const [cmd, ..._args] = [...(0, import_string_argv.parseArgsStringToArgv)(command), ...args];
-      try {
-        await (0, import_execa.default)(cmd, _args);
-      } catch (e) {
-        (0, import_core9.log)(import_chalk4.default.red(`\u{1F6D1} Failed to run ${name} hook: ${e}`));
+    try {
+      if ((0, import_core10.isString)(command)) {
+        await executeCommand(command, args);
+      } else if ((0, import_core10.isFunction)(command)) {
+        await command(args);
+      } else if ((0, import_core10.isObject)(command)) {
+        await executeObjectCommand(command, args);
       }
-    } else if ((0, import_core9.isFunction)(command)) {
-      await command(args);
+    } catch (e) {
+      (0, import_core10.logError)(e, `Failed to run ${name} hook`);
     }
   }
 };
+async function executeCommand(command, args) {
+  const [cmd, ..._args] = [...(0, import_string_argv.parseArgsStringToArgv)(command), ...args];
+  await (0, import_execa.default)(cmd, _args);
+}
+async function executeObjectCommand(command, args) {
+  if (command.injectGeneratedDirsAndFiles === false) {
+    args = [];
+  }
+  if ((0, import_core10.isString)(command.command)) {
+    await executeCommand(command.command, args);
+  } else if ((0, import_core10.isFunction)(command.command)) {
+    await command.command();
+  }
+}
 
 // src/write-specs.ts
 var getHeader = (option, info) => {
@@ -4451,31 +4194,37 @@ var getHeader = (option, info) => {
     return "";
   }
   const header = option(info);
-  return Array.isArray(header) ? (0, import_core10.jsDoc)({ description: header }) : header;
+  return Array.isArray(header) ? (0, import_core11.jsDoc)({ description: header }) : header;
 };
 var writeSpecs = async (builder, workspace, options, projectName) => {
   const { info = { title: "", version: 0 }, schemas, target } = builder;
   const { output } = options;
   const projectTitle = projectName || info.title;
-  const specsName = Object.keys(schemas).reduce((acc, specKey) => {
-    const basePath = import_core10.upath.getSpecName(specKey, target);
-    const name = basePath.slice(1).split("/").join("-");
-    acc[specKey] = name;
-    return acc;
-  }, {});
+  const specsName = Object.keys(schemas).reduce(
+    (acc, specKey) => {
+      const basePath = import_core11.upath.getSpecName(specKey, target);
+      const name = basePath.slice(1).split("/").join("-");
+      acc[specKey] = name;
+      return acc;
+    },
+    {}
+  );
   const header = getHeader(output.override.header, info);
   if (output.schemas) {
     const rootSchemaPath = output.schemas;
+    const fileExtension = ["tags", "tags-split", "split"].includes(output.mode) ? ".ts" : output.fileExtension ?? ".ts";
     await Promise.all(
       Object.entries(schemas).map(([specKey, schemas2]) => {
-        const schemaPath = !(0, import_core10.isRootKey)(specKey, target) ? import_core10.upath.join(rootSchemaPath, specsName[specKey]) : rootSchemaPath;
-        return (0, import_core10.writeSchemas)({
+        const schemaPath = !(0, import_core11.isRootKey)(specKey, target) ? import_core11.upath.join(rootSchemaPath, specsName[specKey]) : rootSchemaPath;
+        return (0, import_core11.writeSchemas)({
           schemaPath,
           schemas: schemas2,
           target,
+          namingConvention: output.namingConvention,
+          fileExtension,
           specsName,
           specKey,
-          isRootKey: (0, import_core10.isRootKey)(specKey, target),
+          isRootKey: (0, import_core11.isRootKey)(specKey, target),
           header,
           indexFiles: output.indexFiles
         });
@@ -4496,39 +4245,51 @@ var writeSpecs = async (builder, workspace, options, projectName) => {
   }
   if (output.workspace) {
     const workspacePath = output.workspace;
-    let imports = implementationPaths.filter(
-      (path) => !output.mock || !path.endsWith(`.${(0, import_core10.getMockFileExtensionByTypeName)(output.mock)}.ts`)
+    const imports = implementationPaths.filter(
+      (path) => !output.mock || !path.endsWith(`.${(0, import_core11.getMockFileExtensionByTypeName)(output.mock)}.ts`)
     ).map(
-      (path) => import_core10.upath.relativeSafe(
+      (path) => import_core11.upath.relativeSafe(
         workspacePath,
-        (0, import_core10.getFileInfo)(path).pathWithoutExtension
+        (0, import_core11.getFileInfo)(path).pathWithoutExtension
       )
     );
     if (output.schemas) {
       imports.push(
-        import_core10.upath.relativeSafe(workspacePath, (0, import_core10.getFileInfo)(output.schemas).dirname)
+        import_core11.upath.relativeSafe(workspacePath, (0, import_core11.getFileInfo)(output.schemas).dirname)
       );
     }
     if (output.indexFiles) {
-      const indexFile = import_core10.upath.join(workspacePath, "/index.ts");
+      const indexFile = import_core11.upath.join(workspacePath, "/index.ts");
       if (await import_fs_extra5.default.pathExists(indexFile)) {
         const data = await import_fs_extra5.default.readFile(indexFile, "utf8");
         const importsNotDeclared = imports.filter((imp) => !data.includes(imp));
         await import_fs_extra5.default.appendFile(
           indexFile,
-          (0, import_lodash2.default)(importsNotDeclared).map((imp) => `export * from '${imp}';`).join("\n") + "\n"
+          (0, import_lodash.default)(importsNotDeclared).map((imp) => `export * from '${imp}';
+`).join("")
         );
       } else {
         await import_fs_extra5.default.outputFile(
           indexFile,
-          (0, import_lodash2.default)(imports).map((imp) => `export * from '${imp}';`).join("\n") + "\n"
+          (0, import_lodash.default)(imports).map((imp) => `export * from '${imp}';`).join("\n") + "\n"
         );
       }
       implementationPaths = [indexFile, ...implementationPaths];
     }
   }
+  if (builder.extraFiles.length) {
+    await Promise.all(
+      builder.extraFiles.map(
+        async (file) => import_fs_extra5.default.outputFile(file.path, file.content)
+      )
+    );
+    implementationPaths = [
+      ...implementationPaths,
+      ...builder.extraFiles.map((file) => file.path)
+    ];
+  }
   const paths = [
-    ...output.schemas ? [(0, import_core10.getFileInfo)(output.schemas).dirname] : [],
+    ...output.schemas ? [(0, import_core11.getFileInfo)(output.schemas).dirname] : [],
     ...implementationPaths
   ];
   if (options.hooks.afterAllFilesWrite) {
@@ -4541,27 +4302,74 @@ var writeSpecs = async (builder, workspace, options, projectName) => {
   if (output.prettier) {
     try {
       await (0, import_execa2.default)("prettier", ["--write", ...paths]);
-    } catch (e) {
-      (0, import_core10.log)(
+    } catch {
+      (0, import_core11.log)(
         import_chalk5.default.yellow(
           `\u26A0\uFE0F  ${projectTitle ? `${projectTitle} - ` : ""}Prettier not found`
         )
       );
     }
   }
-  (0, import_core10.createSuccessMessage)(projectTitle);
+  if (output.biome) {
+    try {
+      await (0, import_execa2.default)("biome", ["check", "--write", ...paths]);
+    } catch (e) {
+      const message = e.exitCode === 1 ? e.stdout + e.stderr : `\u26A0\uFE0F  ${projectTitle ? `${projectTitle} - ` : ""}biome not found`;
+      (0, import_core11.log)(import_chalk5.default.yellow(message));
+    }
+  }
+  if (output.docs) {
+    try {
+      let config = {};
+      let configPath = null;
+      if (typeof output.docs === "object") {
+        ({ configPath = null, ...config } = output.docs);
+        if (configPath) {
+          config.options = configPath;
+        }
+      }
+      const getTypedocApplication = async () => {
+        const { Application: Application2 } = await import("typedoc");
+        return Application2;
+      };
+      const Application = await getTypedocApplication();
+      const app = await Application.bootstrapWithPlugins({
+        entryPoints: paths,
+        theme: "markdown",
+        // Set the custom config location if it has been provided.
+        ...config,
+        plugin: ["typedoc-plugin-markdown", ...config.plugin ?? []]
+      });
+      if (!app.options.isSet("readme")) {
+        app.options.setValue("readme", "none");
+      }
+      if (!app.options.isSet("logLevel")) {
+        app.options.setValue("logLevel", "None");
+      }
+      const project = await app.convert();
+      if (project) {
+        await app.generateDocs(project, app.options.getValue("out"));
+      } else {
+        throw new Error("TypeDoc not initialised");
+      }
+    } catch (e) {
+      const message = e.exitCode === 1 ? e.stdout + e.stderr : `\u26A0\uFE0F  ${projectTitle ? `${projectTitle} - ` : ""}Unable to generate docs`;
+      (0, import_core11.log)(import_chalk5.default.yellow(message));
+    }
+  }
+  (0, import_core11.createSuccessMessage)(projectTitle);
 };
 var getWriteMode = (mode) => {
   switch (mode) {
-    case import_core10.OutputMode.SPLIT:
-      return import_core10.writeSplitMode;
-    case import_core10.OutputMode.TAGS:
-      return import_core10.writeTagsMode;
-    case import_core10.OutputMode.TAGS_SPLIT:
-      return import_core10.writeSplitTagsMode;
-    case import_core10.OutputMode.SINGLE:
+    case import_core11.OutputMode.SPLIT:
+      return import_core11.writeSplitMode;
+    case import_core11.OutputMode.TAGS:
+      return import_core11.writeTagsMode;
+    case import_core11.OutputMode.TAGS_SPLIT:
+      return import_core11.writeSplitTagsMode;
+    case import_core11.OutputMode.SINGLE:
     default:
-      return import_core10.writeSingleMode;
+      return import_core11.writeSingleMode;
   }
 };
 
@@ -4570,18 +4378,18 @@ var generateSpec = async (workspace, options, projectName) => {
   if (options.output.clean) {
     const extraPatterns = Array.isArray(options.output.clean) ? options.output.clean : [];
     if (options.output.target) {
-      await (0, import_core11.removeFiles)(
+      await (0, import_core12.removeFiles)(
         ["**/*", "!**/*.d.ts", ...extraPatterns],
-        (0, import_core11.getFileInfo)(options.output.target).dirname
+        (0, import_core12.getFileInfo)(options.output.target).dirname
       );
     }
     if (options.output.schemas) {
-      await (0, import_core11.removeFiles)(
+      await (0, import_core12.removeFiles)(
         ["**/*", "!**/*.d.ts", ...extraPatterns],
-        (0, import_core11.getFileInfo)(options.output.schemas).dirname
+        (0, import_core12.getFileInfo)(options.output.schemas).dirname
       );
     }
-    (0, import_core11.log)(`${projectName ? `${projectName}: ` : ""}Cleaning output folder`);
+    (0, import_core12.log)(`${projectName ? `${projectName}: ` : ""}Cleaning output folder`);
   }
   const writeSpecBuilder = await importSpecs(workspace, options);
   await writeSpecs(writeSpecBuilder, workspace, options, projectName);
@@ -4593,31 +4401,30 @@ var generateSpecs = async (config, workspace, projectName) => {
       try {
         await generateSpec(workspace, options, projectName);
       } catch (e) {
-        (0, import_core11.log)(import_chalk6.default.red(`\u{1F6D1}  ${projectName ? `${projectName} - ` : ""}${e}`));
+        (0, import_core12.logError)(e, projectName);
         process.exit(1);
       }
     } else {
-      (0, import_core11.errorMessage)("Project not found");
+      (0, import_core12.logError)("Project not found");
       process.exit(1);
     }
     return;
   }
   let hasErrors;
-  const accumulate = (0, import_core11.asyncReduce)(
+  const accumulate = await (0, import_core12.asyncReduce)(
     Object.entries(config),
     async (acc, [projectName2, options]) => {
       try {
         acc.push(await generateSpec(workspace, options, projectName2));
       } catch (e) {
         hasErrors = true;
-        (0, import_core11.log)(import_chalk6.default.red(`\u{1F6D1}  ${projectName2 ? `${projectName2} - ` : ""}${e}`));
+        (0, import_core12.logError)(e, projectName2);
       }
       return acc;
     },
     []
   );
-  if (hasErrors)
-    process.exit(1);
+  if (hasErrors) process.exit(1);
   return accumulate;
 };
 var generateConfig = async (configFile, options) => {
@@ -4625,15 +4432,15 @@ var generateConfig = async (configFile, options) => {
     path,
     file: configExternal,
     error
-  } = await (0, import_core11.loadFile)(configFile, {
+  } = await (0, import_core12.loadFile)(configFile, {
     defaultFileName: "orval.config"
   });
   if (!configExternal) {
     throw `failed to load from ${path} => ${error}`;
   }
-  const workspace = import_core11.upath.dirname(path);
-  const config = await ((0, import_core11.isFunction)(configExternal) ? configExternal() : configExternal);
-  const normalizedConfig = await (0, import_core11.asyncReduce)(
+  const workspace = import_core12.upath.dirname(path);
+  const config = await ((0, import_core12.isFunction)(configExternal) ? configExternal() : configExternal);
+  const normalizedConfig = await (0, import_core12.asyncReduce)(
     Object.entries(config),
     async (acc, [key, value]) => {
       acc[key] = await normalizeOptions(value, workspace, options);
@@ -4642,22 +4449,23 @@ var generateConfig = async (configFile, options) => {
     {}
   );
   const fileToWatch = Object.entries(normalizedConfig).filter(
-    ([project]) => (options == null ? void 0 : options.projectName) === void 0 || project === (options == null ? void 0 : options.projectName)
-  ).map(([, { input }]) => input.target).filter((target) => (0, import_core11.isString)(target));
-  if ((options == null ? void 0 : options.watch) && fileToWatch.length) {
+    ([project]) => options?.projectName === void 0 || project === options?.projectName
+  ).map(([, { input }]) => input.target).filter((target) => (0, import_core12.isString)(target));
+  if (options?.watch && fileToWatch.length) {
     startWatcher(
-      options == null ? void 0 : options.watch,
-      () => generateSpecs(normalizedConfig, workspace, options == null ? void 0 : options.projectName),
+      options?.watch,
+      () => generateSpecs(normalizedConfig, workspace, options?.projectName),
       fileToWatch
     );
   } else {
-    await generateSpecs(normalizedConfig, workspace, options == null ? void 0 : options.projectName);
+    await generateSpecs(normalizedConfig, workspace, options?.projectName);
   }
 };
 
 // src/index.ts
+__reExport(index_exports, require("@orval/core"), module.exports);
 var generate = async (optionsExport, workspace = process.cwd(), options) => {
-  if (!optionsExport || (0, import_core12.isString)(optionsExport)) {
+  if (!optionsExport || (0, import_core13.isString)(optionsExport)) {
     return generateConfig(optionsExport, options);
   }
   const normalizedOptions = await normalizeOptions(
@@ -4665,18 +4473,14 @@ var generate = async (optionsExport, workspace = process.cwd(), options) => {
     workspace,
     options
   );
-  if (options == null ? void 0 : options.watch) {
+  if (options?.watch) {
     startWatcher(
-      options == null ? void 0 : options.watch,
+      options?.watch,
       async () => {
         try {
           await generateSpec(workspace, normalizedOptions);
         } catch (e) {
-          (0, import_core12.log)(
-            import_chalk7.default.red(
-              `\u{1F6D1}  ${(options == null ? void 0 : options.projectName) ? `${options == null ? void 0 : options.projectName} - ` : ""}${e}`
-            )
-          );
+          (0, import_core13.logError)(e, options?.projectName);
         }
       },
       normalizedOptions.input.target
@@ -4685,20 +4489,17 @@ var generate = async (optionsExport, workspace = process.cwd(), options) => {
     try {
       return await generateSpec(workspace, normalizedOptions);
     } catch (e) {
-      (0, import_core12.log)(
-        import_chalk7.default.red(
-          `\u{1F6D1}  ${(options == null ? void 0 : options.projectName) ? `${options == null ? void 0 : options.projectName} - ` : ""}${e}`
-        )
-      );
+      (0, import_core13.logError)(e, options?.projectName);
     }
   }
 };
-var src_default = generate;
+var index_default = generate;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Options,
   defineConfig,
-  generate
+  generate,
+  ...require("@orval/core")
 });
 /*! Bundled license information:
 

@@ -18,10 +18,10 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/index.ts
-var src_exports = {};
-__export(src_exports, {
+var index_exports = {};
+__export(index_exports, {
   builder: () => builder,
-  default: () => src_default,
+  default: () => index_default,
   generateAxios: () => generateAxios,
   generateAxiosFooter: () => generateAxiosFooter,
   generateAxiosFunctions: () => generateAxiosFunctions,
@@ -29,7 +29,7 @@ __export(src_exports, {
   generateAxiosTitle: () => generateAxiosTitle,
   getAxiosDependencies: () => getAxiosDependencies
 });
-module.exports = __toCommonJS(src_exports);
+module.exports = __toCommonJS(index_exports);
 var import_core = require("@orval/core");
 var AXIOS_DEPENDENCIES = [
   {
@@ -78,13 +78,12 @@ var generateAxiosImplementation = ({
   formUrlEncoded,
   paramsSerializer
 }, { route, context }) => {
-  var _a, _b;
-  const isRequestOptions = (override == null ? void 0 : override.requestOptions) !== false;
-  const isFormData = (override == null ? void 0 : override.formData) !== false;
-  const isFormUrlEncoded = (override == null ? void 0 : override.formUrlEncoded) !== false;
-  const isExactOptionalPropertyTypes = !!((_b = (_a = context.tsconfig) == null ? void 0 : _a.compilerOptions) == null ? void 0 : _b.exactOptionalPropertyTypes);
+  const isRequestOptions = override?.requestOptions !== false;
+  const isFormData = override?.formData.disabled === false;
+  const isFormUrlEncoded = override?.formUrlEncoded !== false;
+  const isExactOptionalPropertyTypes = !!context.output.tsconfig?.compilerOptions?.exactOptionalPropertyTypes;
   const isSyntheticDefaultImportsAllowed = (0, import_core.isSyntheticDefaultImportsAllow)(
-    context.tsconfig
+    context.output.tsconfig
   );
   const bodyForm = (0, import_core.generateFormDataAndUrlEncodedFunction)({
     formData,
@@ -93,7 +92,6 @@ var generateAxiosImplementation = ({
     isFormData,
     isFormUrlEncoded
   });
-  const isBodyVerb = import_core.VERBS_WITH_BODY.includes(verb);
   if (mutator) {
     const mutatorConfig = (0, import_core.generateMutatorConfig)({
       route,
@@ -104,12 +102,11 @@ var generateAxiosImplementation = ({
       verb,
       isFormData,
       isFormUrlEncoded,
-      isBodyVerb,
       hasSignal: false,
       isExactOptionalPropertyTypes
     });
     const requestOptions = isRequestOptions ? (0, import_core.generateMutatorRequestOptions)(
-      override == null ? void 0 : override.requestOptions,
+      override?.requestOptions,
       mutator.hasSecondArg
     ) : "";
     returnTypesToWrite.set(
@@ -124,7 +121,7 @@ var generateAxiosImplementation = ({
     ) : (0, import_core.toObjectString)(props, "implementation");
     return `const ${operationName} = (
     ${propsImplementation}
- ${isRequestOptions && mutator.hasSecondArg ? `options?: SecondParameter<typeof ${mutator.name}>,` : ""}) => {${bodyForm}
+ ${isRequestOptions && mutator.hasSecondArg ? `options${context.output.optionsParamRequired ? "" : "?"}: SecondParameter<typeof ${mutator.name}>,` : ""}) => {${bodyForm}
       return ${mutator.name}<${response.definition.success || "unknown"}>(
       ${mutatorConfig},
       ${requestOptions});
@@ -138,11 +135,11 @@ var generateAxiosImplementation = ({
     queryParams,
     response,
     verb,
-    requestOptions: override == null ? void 0 : override.requestOptions,
+    requestOptions: override?.requestOptions,
     isFormData,
     isFormUrlEncoded,
     paramsSerializer,
-    paramsSerializerOptions: override == null ? void 0 : override.paramsSerializerOptions,
+    paramsSerializerOptions: override?.paramsSerializerOptions,
     isExactOptionalPropertyTypes,
     hasSignal: false
   });
@@ -167,13 +164,7 @@ var generateAxiosHeader = ({
   isMutator,
   noFunction
 }) => `
-${isRequestOptions && isMutator ? `// eslint-disable-next-line
-  type SecondParameter<T extends (...args: any) => any> = T extends (
-  config: any,
-  args: infer P,
-) => any
-  ? P
-  : never;
+${isRequestOptions && isMutator ? `type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 ` : ""}
   ${!noFunction ? `export const ${title} = () => {
@@ -237,7 +228,7 @@ var builders = {
   "axios-functions": axiosFunctionsClientBuilder
 };
 var builder = ({ type = "axios-functions" } = {}) => () => builders[type];
-var src_default = builder;
+var index_default = builder;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   builder,
